@@ -51,3 +51,6 @@ def delete_user(id):
     db.session.commit()
 
     return user_schema.jsonify(user)
+
+
+
