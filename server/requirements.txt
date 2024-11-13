@@ -1,0 +1,7 @@
+Flask
+flask-cors
+flask-sqlalchemy
+flask-marshmallow
+marshmallow-sqlalchemy
+flask-migrate
+flask-jwt
