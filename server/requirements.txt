@@ -1,0 +1,12 @@
+Flask
+Flask-RESTful
+Flask-JWT
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-Script
+Flask-Testing
+Flask-Cors
+Flask-HTTPAuth
+Flask-Admin
+Flask-Login
+Flask-Mail
