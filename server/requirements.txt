@@ -10,3 +10,4 @@ Flask-HTTPAuth
 Flask-Admin
 Flask-Login
 Flask-Mail
+flask-jwt-extended
