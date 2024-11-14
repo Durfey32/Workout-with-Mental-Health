@@ -9,7 +9,16 @@ createRoot(document.getElementById('root')!).render([
       path: '/',
       element: <App />
       errorElement: <ErrorPage />
-      children: []
+      children: [
+        {
+          index: true,
+          element: <MainPage />
+        },
+        {
+          path: '/create-account',
+          element: <CreateAccount />
+        },
+      ]
     }
   </StrictMode>
 ]);
