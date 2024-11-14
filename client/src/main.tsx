@@ -18,6 +18,14 @@ createRoot(document.getElementById('root')!).render([
           path: '/create-account',
           element: <CreateAccount />
         },
+        {
+          path: 'login',
+          element: <Login />
+        },
+        {
+          path: 'home',
+          element: <Home />
+        },
       ]
     }
   </StrictMode>
