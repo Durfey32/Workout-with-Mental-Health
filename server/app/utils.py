@@ -21,14 +21,6 @@ jwt = JWT(app, authenticate, identity)
 def protected():
     return jsonify({'message': 'Protected endpoint', 'user': current_identity})
 
-with open('quotes.csv', 'r') as file:
-    quotes = json.load(file)
-
-@app.route('/Resources/quotes/random')
-def generate_random_quote():
-    quote = random.choice(quotes)
-    return jsonify(quote)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
