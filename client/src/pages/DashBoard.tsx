@@ -1,11 +1,20 @@
-
-import React from 'react';
-import { useState, useEffect, MouseEventHandler } from 'react'
-import { Link } from 'react-router-dom'
-// import { useAuth0 } from '@auth0/auth0-react'
-// import { SignInButton } from '../components/SignInButton'
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const DashBoard: React.FC = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'; // Example of using localStorage for auth
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login'); 
+    }
+  }, [isAuthenticated, navigate]);
+
+  if (!isAuthenticated) {
+    return null; 
+  }
+
   return (
     <div className="dashboard">
       <h2>Welcome to Your Fitness & Mental Health Dashboard</h2>

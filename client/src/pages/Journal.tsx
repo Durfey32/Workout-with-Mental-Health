@@ -1,4 +1,3 @@
-// client/src/pages/Journal.tsx
 import React, { useState } from 'react';
 
 const Journal: React.FC = () => {
