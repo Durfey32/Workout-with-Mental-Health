@@ -1,8 +1,8 @@
+Path
 Flask
 Flask-RESTful
 Flask-JWT
 Flask-SQLAlchemy
-Flask-Migrate
 Flask-Script
 Flask-Testing
 Flask-Cors
@@ -10,3 +10,9 @@ Flask-HTTPAuth
 Flask-Admin
 Flask-Login
 Flask-Mail
+Flask-jwt-extended
+Flask-migrate
+python-dotenv
+pymongoarrow
+pandas
+mongoengine
