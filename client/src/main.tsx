@@ -12,7 +12,6 @@ import SettingsInfo from './pages/SettingsInfo.tsx';
 import ContactUs from './pages/ContactUs.tsx';
 import CommChat from './pages/CommChat.tsx';
 import Journal from './pages/Journal.tsx';
-import LoginPage from './pages/Login.tsx';
 import Workout from './pages/WorkOutGen.tsx';
 
 
@@ -30,10 +29,6 @@ const router = createBrowserRouter([
         {
           path: '/create-account',
           element: <CreateAccount />
-        },
-        {
-          path: '/login',
-          element: <LoginPage />
         },
         {
           path: 'home',
@@ -59,13 +54,13 @@ const router = createBrowserRouter([
           path: 'settings',
           element: <SettingsInfo />
         },
-      ]
-    }
+      ],
+    },
 ]);
 
 const rootElement = document.getElementById('root');
 if(rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <RouterProvider router={router} />
-  );
-}
+   );
+ }

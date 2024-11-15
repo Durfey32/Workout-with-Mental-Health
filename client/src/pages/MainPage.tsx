@@ -1,5 +1,13 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
 const MainPage = () => {
-    // Here will be the contents for the main page
+    return (
+        <div>
+            <h1>Main Page</h1>
+        </div>
+    );
 };
 
 export default MainPage;
