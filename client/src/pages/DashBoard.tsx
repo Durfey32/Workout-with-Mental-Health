@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import { SignInButton } from '../components/SignInButton'
 
-const Home = () => {
+const DashBoard = () => {
     const [count, setCount] = useState(0)
     const { isAuthenticated, user } = useAuth0()
     
@@ -33,4 +33,4 @@ const Home = () => {
     )
     }
 
-    export default Home
+    export default DashBoard;

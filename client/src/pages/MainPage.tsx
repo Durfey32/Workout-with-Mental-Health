@@ -1,1 +1,5 @@
-// Here will be the contents for the welcome page and lgoin page for users with accounts
+const MainPage = () => {
+    // Here will be the contents for the main page
+};
+
+export default MainPage;
