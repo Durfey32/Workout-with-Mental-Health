@@ -7,7 +7,6 @@ import App from './App.tsx'
 import ErrorPage from './pages/ErrorPage.tsx'
 import MainPage from './pages/MainPage.tsx'
 import CreateAccount from './pages/CreateAccount.tsx'
-import Login from './pages/Login.tsx'
 import Home from './pages/Home.tsx'
 import Profile from './pages/Profile.tsx'
 import ContactUs from './pages/ContactUs.tsx'
@@ -27,10 +26,6 @@ createRoot(document.getElementById('root')!).render([
         {
           path: '/create-account',
           element: <CreateAccount />
-        },
-        {
-          path: 'login',
-          element: <Login />
         },
         {
           path: 'home',

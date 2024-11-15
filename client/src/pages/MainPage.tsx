@@ -1,0 +1,1 @@
+// Here will be the contents for the welcome page and lgoin page for users with accounts
