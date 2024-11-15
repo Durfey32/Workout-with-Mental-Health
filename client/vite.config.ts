@@ -9,6 +9,11 @@ export default defineConfig({
     host: '127.0.0.1',
     open: true,
     proxy: {
+      '/quotes': {
+        target: 'http://localhost:3001',
+        secure: false,
+        changeOrigin: true,
+      },
       '/api': {
         target: 'http://localhost:3001',
         secure: false,

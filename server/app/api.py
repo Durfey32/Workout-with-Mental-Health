@@ -1,7 +1,7 @@
 from flask import request, jsonify, Flask
 from app import app
 from . import db
-from app.models import Workout
+from app.models import User, Workout
 from app.schemas import workout_schema
 
 
