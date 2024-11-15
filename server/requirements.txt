@@ -16,3 +16,4 @@ python-dotenv
 pymongoarrow
 pandas
 mongoengine
+virtualenv
