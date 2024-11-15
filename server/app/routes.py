@@ -4,8 +4,26 @@ from . import db, ma
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+import random
+import json
+import os
 
 user_bp = Blueprint('user_bp', __name__)
+quotes_bp = Blueprint('quotes_bp', __name__)
+
+base_dir = os.path.abspath(os.path.dirname(__file__))
+
+quotes_file_path = os.path.join(os.path.dirname(__file__), 'Resources', 'quotes.csv')
+if not os.path.exists(quotes_file_path):
+    quotes_file_path = os.path.join(os.path.dirname(__file__), 'Resources', 'quotes.json')
+
+with open(quotes_file_path, 'r', encoding='utf-8') as file:
+    quotes = json.load(file)
+
+@quotes_bp.route('/quotes', methods=['GET'])
+def generate_random_quote():
+    quote = random.choice(quotes)
+    return jsonify(quote)
 
 class UserSchema(ma.Schema):
     class Meta:
@@ -89,3 +107,4 @@ def delete_user(id):
     db.session.commit()
 
     return user_schema.jsonify(user)
+

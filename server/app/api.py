@@ -1,10 +1,12 @@
-from flask import request, jsonify
+from flask import request, jsonify, Flask
 from app import app
 from . import db
-from app.models import Workout
+from app.models import User, Workout
 from app.schemas import workout_schema
 
+
 import requests
+app = Flask(__name__)
 
 @app.route('/workout', methods=['POST'])
 def add_workout():
@@ -23,7 +25,7 @@ def add_workout():
 def get_exercises():
     muscle = request.args.get('muscle')
     api_url = 'https://api.api-ninjas.com/v1/exercises?muscle={}'.format(muscle)
-    response = requests.get(api_url, headers={'X-Api-Key': 'YOUR_API_KEY'})
+    response = requests.get(api_url, headers={'X-Api-Key': 't79x9D05SpMMobuHZoL+3A==iigH52Z3n4indYPg'})
     
     if response.status_code == requests.codes.ok:
         return jsonify(response.json())
