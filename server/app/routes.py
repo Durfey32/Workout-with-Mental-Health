@@ -16,9 +16,9 @@ users_schema = UserSchema(many=True)
 
 @user_bp.route('/user', methods=['POST'])
 def signup():
-    name = request.json['name']
-    email = request.json['email']
-    password = request.json['password']
+    name = request.json.get('name')
+    email = request.json.get('email', None)
+    password = request.json.get('password')
 
     if User.query.filter_by(email=email).first():
         return jsonify({'message': 'User already exists'})
@@ -34,7 +34,7 @@ def signup():
 @user_bp.route('/login', methods=['POST'])
 def login():
     email = request.json.get('email', None) 
-    password = request.json.get('password', None)
+    password = request.json.get('password')
 
     user = User.query.filter_by(email=email).first()
 
@@ -52,17 +52,6 @@ def protected():
     user = User.query.get(current_user_id)
     return jsonify(logged_in_as=user_schema.dump(user)), 200
 
-@user_bp.route('/user', methods=['POST'])
-def add_user():
-    name = request.json['name']
-    email = request.json['email']
-    password = request.json['password']
-
-    new_user = User(name, email, password)
-    db.session.add(new_user)
-    db.session.commit()
-
-    return user_schema.jsonify(new_user)
 
 @user_bp.route('/user', methods=['GET'])
 def get_users():
@@ -79,13 +68,16 @@ def get_user(id):
 def update_user(id):
     user = User.query.get(id)
 
-    name = request.json['name']
-    email = request.json['email']
-    password = request.json['password']
+    name = request.json.get('name')
+    email = request.json.get('email')
+    password = request.json.get('password')
 
-    user.name = name
-    user.email = email
-    user.password = password
+    if name:
+        user.name = name
+    if email:
+        user.email = email
+    if password:
+        user.password = generate_password_hash(password)
     db.session.commit()
 
     return user_schema.jsonify(user)

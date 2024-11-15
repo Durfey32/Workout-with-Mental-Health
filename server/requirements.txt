@@ -1,3 +1,4 @@
+Path
 Flask
 Flask-RESTful
 Flask-JWT
@@ -11,3 +12,7 @@ Flask-Login
 Flask-Mail
 Flask-jwt-extended
 Flask-migrate
+python-dotenv
+pymongoarrow
+pandas
+mongoengine
