@@ -23,7 +23,9 @@ def create_app():
 
     with app.app_context():
         from .routes import user_bp
+        from .routes import quotes_bp
         app.register_blueprint(user_bp)
+        app.register_blueprint(quotes_bp)
 
     return app
 
