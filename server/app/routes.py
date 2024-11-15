@@ -11,11 +11,13 @@ import os
 user_bp = Blueprint('user_bp', __name__)
 quotes_bp = Blueprint('quotes_bp', __name__)
 
+base_dir = os.path.abspath(os.path.dirname(__file__))
+
 quotes_file_path = os.path.join(os.path.dirname(__file__), 'Resources', 'quotes.csv')
 if not os.path.exists(quotes_file_path):
     quotes_file_path = os.path.join(os.path.dirname(__file__), 'Resources', 'quotes.json')
 
-with open(quotes_file_path, 'r') as file:
+with open(quotes_file_path, 'r', encoding='utf-8') as file:
     quotes = json.load(file)
 
 @quotes_bp.route('/quotes', methods=['GET'])

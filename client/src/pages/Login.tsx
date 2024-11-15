@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { login } from '../api/authApi'; 
+import { Link } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -42,6 +43,8 @@ const Login: React.FC = () => {
         {error && <p className="error-message">{error}</p>}
         <button type="submit">Login</button>
       </form>
+
+      <p>Don't have an account? <Link to="/create-account"><button>Create one here</button></Link></p>
     </div>
   );
 };
