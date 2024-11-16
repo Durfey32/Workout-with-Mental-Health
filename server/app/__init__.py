@@ -1,24 +1,23 @@
 from flask import Flask, send_from_directory
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
+from flask_pymongo import PyMongo
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager
 from config import Config
 import os
 
-db = SQLAlchemy()
 ma = Marshmallow()
 jwt = JWTManager()
+mongo = PyMongo()
 
 def create_app():
     app = Flask(__name__, static_folder='../../client/dist', static_url_path='/')
     app.config.from_object(Config)
     CORS(app)
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-    db.init_app(app)
+    app.config['MONGO_URI'] = os.getenv('MONGO_URI', 'mongodb://localhost:27017/workout_with_mental_health')
+ 
+    mongo.init_app(app)
     ma.init_app(app)
     jwt.init_app(app)
 

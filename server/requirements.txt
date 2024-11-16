@@ -17,3 +17,4 @@ pymongoarrow
 pandas
 mongoengine
 virtualenv
+pymongo
