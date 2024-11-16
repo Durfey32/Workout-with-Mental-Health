@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const MainPage = () => {
@@ -7,6 +8,28 @@ const MainPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [quote, setQuote] = useState<string | null>(null);
+    const [quoteAuthor, setQuoteAuthor] = useState<string | null>(null);
+
+    useEffect(() => {
+      // Fetch a random quote from an API
+      const fetchQuote = async () => {
+        try {
+          const response = await fetch('/quotes');
+          if (response.ok) {
+          const data = await response.json();
+          setQuote(data.quoteText);
+          setQuoteAuthor(data.quoteAuthor);
+        } else {
+          console.error('Failed to fetch quote');
+        }
+      } catch (error) {
+        console.error('Error fetching quote:', error);
+      }
+    };
+  
+    fetchQuote();
+  }, []);
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -39,6 +62,11 @@ const MainPage = () => {
 
             <main>
                 <section>
+                    <h2>Quote of the Day</h2>
+                    <p>{quote}</p>
+                    <p>{quoteAuthor}</p>
+                </section>
+                <section>
                     <h2>Login</h2>
                     {error && <p>{error}</p>}
                     <form onSubmit={handleSubmit}>
@@ -62,7 +90,7 @@ const MainPage = () => {
 
                     <button type="submit">Login</button>
                     </form>
-                    <p>Don't have an account? <a href="/create-account">Create one</a></p>
+                    <p>Don't have an account? <Link to="/create-account">Create one</Link></p>
                 </section>
             </main>
         </div>
