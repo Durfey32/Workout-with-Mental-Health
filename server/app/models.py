@@ -1,28 +1,9 @@
 import datetime
-from config import db
+from marshmallow import Schema, fields
 import mongoengine as me
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    userName = db.Column(db.String(100))
-    password = db.Column(db.String(100))
-    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
-
-    def __init__(self, name, userName, password):
-        self.name = name
-        self.userName = userName
-        self.password = password
-
-class UserSchema(me.Schema):
-    class Meta:
-        fields = ('id', 'name', 'userName', 'password', 'created_at')
-
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
-
 class MongoUser(me.Document):
-    name = me.StringField(required=True, max_length=100),
+    name = me.StringField(required=True, max_length=100)
     userName = me.StringField(required=True, max_length=100, unique=True)
     password = me.StringField(required=True, max_length=100)
     created_at = me.DateTimeField(default=datetime.datetime.now)
@@ -32,3 +13,52 @@ class MongoUser(me.Document):
         self.name = name
         self.userName = userName
         self.password = password
+
+class UserSchema(Schema):
+    name = fields.Str()
+    userName = fields.Str()
+    password = fields.Str()
+    created_at = fields.DateTime()
+
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
+
+class Workout:
+    def __init__(self, name, type, muscle, equipment, difficulty, instructions):
+        self.name = name
+        self.type = type
+        self.muscle = muscle
+        self.equipment = equipment
+        self.difficulty = difficulty
+        self.instructions = instructions
+
+class WorkoutSchema(Schema):
+    name = fields.Str()
+    type = fields.Str()
+    muscle = fields.Str()
+    equipment = fields.Str()
+    difficulty = fields.Str()
+    instructions = fields.Str()
+
+workout_schema = WorkoutSchema()
+workouts_schema = WorkoutSchema(many=True)
+
+class Meal:
+    def __init__(self, name, type, calories, protein, carbs, fat):
+        self.name = name
+        self.type = type
+        self.calories = calories
+        self.protein = protein
+        self.carbs = carbs
+        self.fat = fat
+
+class MealSchema(Schema):
+    name = fields.Str()
+    type = fields.Str()
+    calories = fields.Int()
+    protein = fields.Int()
+    carbs = fields.Int()
+    fat = fields.Int()
+
+meal_schema = MealSchema()
+meals_schema = MealSchema(many=True)

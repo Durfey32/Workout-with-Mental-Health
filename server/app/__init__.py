@@ -22,9 +22,14 @@ def create_app():
     jwt.init_app(app)
 
     with app.app_context():
-        from .routes import user_bp, quotes_bp
+        from .routes.user_routes import user_bp
+        from .routes.quotes_routes import quotes_bp
+        from .routes.workout_routes import workout_bp
+        from .routes.meal_routes import meal_bp
         app.register_blueprint(user_bp)
         app.register_blueprint(quotes_bp)
+        app.register_blueprint(workout_bp)
+        app.register_blueprint(meal_bp)
 
     @app.route('/')
     def server_react_app():
