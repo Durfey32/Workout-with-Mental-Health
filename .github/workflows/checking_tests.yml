@@ -3,7 +3,7 @@ name: Checking Tests
 on:
   pull_request:
     branches:
-        - main
+        - develop
 
 jobs:
   test:
@@ -18,4 +18,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
+
+      - name: Install and build dependencies
+        run: npm run render-build
+
+      - name: Run tests
+        run: npm run start
 
