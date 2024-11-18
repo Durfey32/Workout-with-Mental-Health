@@ -3,7 +3,7 @@ name: Checking Tests
 on:
   pull_request:
     branches:
-        - main
+      - main
 
 jobs:
   test:
@@ -11,17 +11,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the code
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
 
-      - name: Install and build dependencies
-        run: npm run render-build
+      # Step 3: Set up Python (since your project needs it)
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-      - name: Run tests
+      # Step 4: Install dependencies and build
+      - name: Install dependencies and build
+        run: |
+          # Install Python dependencies
+          cd server
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
+          cd ../client
+          npm install
+          npm run build
+
+      # Step 5: Run start
+      - name: Run start
         run: npm run start
-
