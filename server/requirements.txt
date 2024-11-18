@@ -18,3 +18,5 @@ pandas
 mongoengine
 virtualenv
 pymongo
+Flask
+flask_pymongo
