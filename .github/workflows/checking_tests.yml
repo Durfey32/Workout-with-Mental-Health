@@ -1,40 +1,53 @@
-name: Checking Tests
+name: Build and Deploy
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
 
 jobs:
-  test:
-    name: Checking Tests
+  build:
     runs-on: ubuntu-latest
 
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      
+      - name: Check out code
+        uses: actions/checkout@v3
 
+      
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: 21.x
+          node-version: 18
 
+      
+      - name: Install Node.js dependencies
+        run: |
+          npm install
+          npm run client:build
+
+    
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.10'
 
-      - name: Install dependencies and build
+      
+      - name: Install Python dependencies
         run: |
-          cd server
-          python3 -m pip install --upgrade pip
-          python3 -m pip install -r requirements.txt
-          cd ../client
-          npm install
-          npm run build
+          python -m pip install --upgrade pip
+          pip install -r server/requirements.txt
 
-      - name: Run start
+      
+      - name: Run server tests
         run: |
-          npm run client:build
-          cd server
-          python3 app.py
+          python -m unittest discover -s server/tests
