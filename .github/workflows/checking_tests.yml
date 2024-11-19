@@ -23,24 +23,22 @@ jobs:
         with:
           node-version: 18
 
-      # Step 3: Install Node.js dependencies and build client
-      - name: Install Node.js dependencies
-        run: |
-          npm install
-          npm run client:build
-
-      # Step 4: Set up Python
+      # Step 3: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      # Step 5: Install Python dependencies
+      # Step 4: Install Python dependencies
       - name: Install Python dependencies
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r server/requirements.txt
 
-      # Step 6: Install additional Node.js dependencies for the server (if needed)
-      - name: Install server Node.js dependencies
-        run: cd client && npm install
+      # Step 5: Install Node.js dependencies
+      - name: Install Node.js dependencies
+        run: npm install
+
+      # Step 6: Build the client
+      - name: Build the client
+        run: npm run client:build
