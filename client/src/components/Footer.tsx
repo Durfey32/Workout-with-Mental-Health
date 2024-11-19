@@ -1,4 +1,4 @@
-cont Footer = () => {
+const Footer = () => {
     //  here will be the footer component
 };
 
