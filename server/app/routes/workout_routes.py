@@ -1,26 +1,22 @@
-from flask import Blueprint, jsonify, current_app, request
+from flask import Blueprint, jsonify, request
 from app.models import Workout, workout_schema, workouts_schema
-import os
+from app import mongo
 
 workout_bp = Blueprint('workout_bp', __name__)
 
-base_dir = os.path.abspath(os.path.dirname(__file__))
-
-@workout_bp.route('/workout', methods=['GET'])
+@workout_bp.route('/api/workout', methods=['GET'])
 def get_workouts():
-    workout_collection = current_app.config['MONGO_URI'].db.workouts
-
+    workout_collection = mongo.db.workouts
     workouts = list(workout_collection.find())
-    return jsonify(workouts)
+    return jsonify(workouts_schema.dump(workouts))
 
-@workout_bp.route('/workout/<id>', methods=['GET'])
+@workout_bp.route('/api/workout/<id>', methods=['GET'])
 def get_workout(id):
-    workout_collection = current_app.config['MONGO_URI'].db.workouts
-
+    workout_collection = mongo.db.workouts
     workout = workout_collection.find_one({'_id': id})
-    return jsonify(workout)
+    return jsonify(workout_schema.dump(workout))
 
-@workout_bp.route('/workout', methods=['POST'])
+@workout_bp.route('/api/workout', methods=['POST'])
 def add_workout():
     name = request.json['name']
     type = request.json['type']
@@ -30,16 +26,14 @@ def add_workout():
     instructions = request.json['instructions']
 
     new_workout = Workout(name, type, muscle, equipment, difficulty, instructions)
-    mongo = current_app.config['MONGO_URI']
     workout_collection = mongo.db.workouts
     workout_collection.insert_one(new_workout.__dict__)
 
-    return workout_schema.jsonify(new_workout)
+    return jsonify(workout_schema.dump(new_workout))
 
-@workout_bp.route('/workout/<id>', methods=['PUT'])
+@workout_bp.route('/api/workout/<id>', methods=['PUT'])
 def update_workout(id):
-    workout_collection = current_app.config['MONGO_URI'].db.workouts
-
+    workout_collection = mongo.db.workouts
     workout = workout_collection.find_one({'_id': id})
 
     workout['name'] = request.json['name']
@@ -50,12 +44,11 @@ def update_workout(id):
     workout['instructions'] = request.json['instructions']
 
     workout_collection.save(workout)
-    return jsonify(workout)
+    return jsonify(workout_schema.dump(workout))
 
-@workout_bp.route('/workout/<id>', methods=['DELETE'])
+@workout_bp.route('/api/workout/<id>', methods=['DELETE'])
 def delete_workout(id):
-    workout_collection = current_app.config['MONGO_URI'].db.workouts
-
+    workout_collection = mongo.db.workouts
     workout = workout_collection.find_one({'_id': id})
 
     workout_collection.remove(workout)
