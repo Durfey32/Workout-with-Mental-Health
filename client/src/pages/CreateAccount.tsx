@@ -28,18 +28,31 @@ const CreateAccount = () => {
     };
     return (
         <div>
-        <h1>Create Account</h1>
-        <form>
-            <label>
-            Username:
-            <input type="username" name="username" />
-            </label>
-            <label>
-            Password:
-            <input type="password" name="password" />
-            </label>
-            <button type="submit">Create Account</button>
-        </form>
+            <header>
+                <h1>Create Account</h1>
+            </header>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={(event) => setUsername(event.target.value)}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
+                </div>
+                <button type="submit">Create Account</button>
+                {error && <div>{error}</div>}
+            </form>
         </div>
     );
 };
