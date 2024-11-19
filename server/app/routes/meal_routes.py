@@ -1,14 +1,138 @@
 from flask import Blueprint, jsonify, request
 from app.models import Meal, meal_schema, meals_schema
 from app import mongo
+import os
+import requests
 
 meal_bp = Blueprint('meal_bp', __name__)
 
 @meal_bp.route('/api/meal', methods=['GET'])
 def get_meals():
-    meal_collection = mongo.db.meals
-    meals = list(meal_collection.find())
-    return jsonify(meals_schema.dump(meals))
+    app_key = os.getenv('edamam-api-key')
+    app_id = os.getenv('edamam-app-id')
+    # meal = request.args.get('brisket', 'fries')
+    api_url = 'https://api.edamam.com/api/food-database/v2/select'
+    params = {
+  "size": 7,
+  "plan": {
+    "accept": {
+      "all": [
+        {
+          "health": [
+            "SOY_FREE",
+            "FISH_FREE",
+            "MEDITERRANEAN"
+          ]
+        }
+      ]
+    },
+    "fit": {
+      "ENERC_KCAL": {
+        "min": 1000,
+        "max": 2000
+      },
+      "SUGAR.added": {
+        "max": 20
+      }
+    },
+    "exclude": [
+      "http://www.edamam.com/ontologies/edamam.owl#recipe_x",
+      "http://www.edamam.com/ontologies/edamam.owl#recipe_y",
+      "http://www.edamam.com/ontologies/edamam.owl#recipe_z"
+    ],
+    "sections": {
+      "Breakfast": {
+        "accept": {
+          "all": [
+            {
+              "dish": [
+                "drinks",
+                "egg",
+                "biscuits and cookies",
+                "bread",
+                "pancake",
+                "cereals"
+              ]
+            },
+            {
+              "meal": [
+                "breakfast"
+              ]
+            }
+          ]
+        },
+        "fit": {
+          "ENERC_KCAL": {
+            "min": 100,
+            "max": 600
+          }
+        }
+      },
+      "Lunch": {
+        "accept": {
+          "all": [
+            {
+              "dish": [
+                "main course",
+                "pasta",
+                "egg",
+                "salad",
+                "soup",
+                "sandwiches",
+                "pizza",
+                "seafood"
+              ]
+            },
+            {
+              "meal": [
+                "lunch/dinner"
+              ]
+            }
+          ]
+        },
+        "fit": {
+          "ENERC_KCAL": {
+            "min": 300,
+            "max": 900
+          }
+        }
+      },
+      "Dinner": {
+        "accept": {
+          "all": [
+            {
+              "dish": [
+                "seafood",
+                "egg",
+                "salad",
+                "pizza",
+                "pasta",
+                "main course"
+              ]
+            },
+            {
+              "meal": [
+                "lunch/dinner"
+              ]
+            }
+          ]
+        },
+        "fit": {
+          "ENERC_KCAL": {
+            "min": 200,
+            "max": 900
+          }
+        }
+      }
+    }
+  }
+ }
+    response = requests.post(api_url, json=params, params={'app_key': app_key, 'app_id': app_id}, headers={'Content-Type': 'application/json'})
+    
+    if response.status_code == requests.codes.ok:
+        return jsonify(response.json())
+    else:
+        return jsonify({"error": response.status_code, "message": response.text}), response.status_code
 
 @meal_bp.route('/api/meal/<id>', methods=['GET'])
 def get_meal(id):
