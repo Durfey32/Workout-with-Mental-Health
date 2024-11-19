@@ -17,7 +17,7 @@ const CreateAccount = () => {
             });
 
             if (response.ok) {
-                navigate('/login');
+                navigate('/dashboard');
             } else {
                 setError('Failed to create account');
             }
