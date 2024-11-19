@@ -1,41 +1,39 @@
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
-import os
+from app import mongo
 
 user_bp = Blueprint('user_bp', __name__)
 
-base_dir = os.path.abspath(os.path.dirname(__file__))
-
-@user_bp.route('/user', methods=['POST'])
+@user_bp.route('/api/user', methods=['POST'])
 def signup():
     name = request.json.get('name')
-    userName = request.json.get('userName', None)
+    username = request.json.get('username', None)
     password = request.json.get('password')
 
-    user_collection = current_app.config['MONGO_URI'].db.users
+    user_collection = mongo.db.users
 
-    if user_collection.find_one({'userName': userName}): 
+    if user_collection.find_one({'username': username}): 
         return jsonify({'message': 'User already exists'})
     
     hashed_password = generate_password_hash(password)
     new_user = {
         'name': name,
-        'userName': userName,
+        'username': username,
         'password': hashed_password
     }
     user_collection.insert_one(new_user)
     return jsonify({'message': 'User created successfully'}), 201
 
-@user_bp.route('/login', methods=['POST'])
+@user_bp.route('/api/login', methods=['POST'])
 def login():
-    userName = request.json.get('userName', None) 
+    username = request.json.get('username', None)
     password = request.json.get('password')
 
-    user_collection = current_app.config['MONGO_URI'].db.users
+    user_collection = mongo.db.users
 
-    user = user_collection.find_one({'userName': userName})
+    user = user_collection.find_one({'username': username})
 
     if user and check_password_hash(user['password'], password):
         expires = datetime.timedelta(hours=24)
@@ -44,51 +42,46 @@ def login():
     else:
         return jsonify({'message': 'Invalid credentials'}), 401
     
-@user_bp.route('/user', methods=['GET'])
+@user_bp.route('/api/user', methods=['GET'])
 @jwt_required()
-def protected():
-    current_user_id = get_jwt_identity()
-    user_collection = current_app.config['MONGO_URI'].db.users
-
-    user = user_collection.find_one({'_id': current_user_id})
-    return jsonify(logged_in_as=user), 200
-
-@user_bp.route('/user', methods=['GET'])
 def get_users():
-    user_collection = current_app.config['MONGO_URI'].db.users
+    user_collection = mongo.db.users
 
     all_users = list(user_collection.find())
     return jsonify(all_users)
 
-@user_bp.route('/user/<id>', methods=['GET'])
+@user_bp.route('/api/user/<id>', methods=['GET'])
+@jwt_required()
 def get_user(id):
-    user_collection = current_app.config['MONGO_URI'].db.users
+    user_collection = mongo.db.users
 
     user = user_collection.find_one({'_id': id})
     return jsonify(user)
 
-@user_bp.route('/user/<id>', methods=['PUT'])
+@user_bp.route('/api/user/<id>', methods=['PUT'])
+@jwt_required()
 def update_user(id):
-    user_collection = current_app.config['MONGO_URI'].db.users
+    user_collection = mongo.db.users
 
     name = request.json.get('name')
-    userName = request.json.get('userName')
+    username = request.json.get('username')
     password = request.json.get('password')
 
     update_fields = {}
     if name:
         update_fields['name'] = name
-    if userName:
-        update_fields['userName'] = userName
+    if username:
+        update_fields['username'] = username
     if password:
         update_fields['password'] = generate_password_hash(password)
 
     user_collection.update_one({'_id': id}, {'$set': update_fields})
     return jsonify({'message': 'User updated successfully'})
 
-@user_bp.route('/user/<id>', methods=['DELETE'])
+@user_bp.route('/api/user/<id>', methods=['DELETE'])
+@jwt_required()
 def delete_user(id):
-    user_collection = current_app.config['MONGO_URI'].db.users
+    user_collection = mongo.db.users
 
     result = user_collection.delete_one({'_id': id})
 

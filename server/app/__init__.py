@@ -16,7 +16,6 @@ def create_app():
     CORS(app)
 
     app.config['MONGO_URI'] = os.getenv('MONGO_URI', 'mongodb://localhost:27017/workout_with_mental_health')
- 
     mongo.init_app(app)
     ma.init_app(app)
     jwt.init_app(app)
@@ -32,7 +31,7 @@ def create_app():
         app.register_blueprint(meal_bp)
 
     @app.route('/')
-    def server_react_app():
+    def serve_react_app():
         return send_from_directory(app.static_folder, 'index.html')
 
     return app
@@ -42,4 +41,3 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 3001))
     debug = os.getenv('DEBUG', 'True') == 'True'
     app.run(host='0.0.0.0', port=port, debug=debug)
-

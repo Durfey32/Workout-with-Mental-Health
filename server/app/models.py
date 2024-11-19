@@ -4,19 +4,19 @@ import mongoengine as me
 
 class MongoUser(me.Document):
     name = me.StringField(required=True, max_length=100)
-    userName = me.StringField(required=True, max_length=100, unique=True)
+    username = me.StringField(required=True, max_length=100, unique=True)
     password = me.StringField(required=True, max_length=100)
     created_at = me.DateTimeField(default=datetime.datetime.now)
 
-    def __init__(self, name, userName, password, *args, **kwargs):
+    def __init__(self, name, username, password, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.name = name
-        self.userName = userName
+        self.username = username
         self.password = password
 
 class UserSchema(Schema):
     name = fields.Str()
-    userName = fields.Str()
+    username = fields.Str()
     password = fields.Str()
     created_at = fields.DateTime()
 
