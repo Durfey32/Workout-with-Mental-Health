@@ -29,16 +29,10 @@ jobs:
         with:
           python-version: '3.10'
 
-      # Step 4: Upgrade pip and install Python dependencies
-      - name: Install Python dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install -r server/requirements.txt
+      # Step 4: Install dependencies using the renamed script
+      - name: Install dependencies
+        run: npm run github-install
 
-      # Step 5: Install Node.js dependencies for both server and client
-      - name: Install Node.js dependencies
-        run: npm github-install
-
-      # Step 6: Build the client
+      # Step 5: Build the client
       - name: Build the client
         run: npm run client:build
