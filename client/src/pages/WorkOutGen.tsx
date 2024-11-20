@@ -3,23 +3,29 @@ import axios from 'axios';
 
 const WorkoutGen: React.FC = () => {
   const [muscle, setMuscle] = useState<string>('biceps');
+  const [type, setType] = useState<string | null>(null);
+  const [difficulty, setDifficulty] = useState<string | null>(null);
+
   interface Workout {
     name: string;
     type: string;
+    muscle: string;
     equipment?: string;
+    difficulty: string;
     instructions: string;
   }
 
   const [workouts, setWorkouts] = useState<Workout[]>([]);
-  const [loading, setLoading] = useState<boolean>(false); 
-  const [error, setError] = useState<string | null>(null); 
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
   const fetchWorkouts = async () => {
     setLoading(true);
     setError(null);
 
     try {
       const response = await axios.get(`/api/workout`, {
-        params: { muscle },
+        params: { muscle, type, difficulty },
       });
       setWorkouts(response.data);
     } catch (err: unknown) {
@@ -36,15 +42,15 @@ const WorkoutGen: React.FC = () => {
   return (
     <div className="workout-gen">
       <h2>Generate Your Custom Workout</h2>
-      <p>Choose a muscle group and we'll generate a workout plan for you!</p>
+      <p>Select parameters to generate a workout list tailored to your needs!</p>
 
-      {/* Input for selecting muscle group */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
           fetchWorkouts();
         }}
       >
+        {/* Muscle Group */}
         <label htmlFor="muscle">Muscle Group:</label>
         <select
           id="muscle"
@@ -54,20 +60,50 @@ const WorkoutGen: React.FC = () => {
           <option value="biceps">Biceps</option>
           <option value="triceps">Triceps</option>
           <option value="chest">Chest</option>
-          <option value="back">Back</option>
-          <option value="legs">Legs</option>
-          <option value="abs">Abs</option>
+          <option value="lower_back">Lower Back</option>
+          <option value="middle_back">Middle Back</option>
+          <option value="abdominals">Abdominals</option>
+          <option value="quadriceps">Quadriceps</option>
+          <option value="hamstrings">Hamstrings</option>
+          <option value="glutes">Glutes</option>
         </select>
+
+        {/* Exercise Type */}
+        <label htmlFor="type">Exercise Type:</label>
+        <select
+          id="type"
+          value={type || ''}
+          onChange={(e) => setType(e.target.value || null)}
+        >
+          <option value="">Any</option>
+          <option value="cardio">Cardio</option>
+          <option value="strength">Strength</option>
+          <option value="stretching">Stretching</option>
+          <option value="plyometrics">Plyometrics</option>
+          <option value="powerlifting">Powerlifting</option>
+          <option value="olympic_weightlifting">Olympic Weightlifting</option>
+          <option value="strongman">Strongman</option>
+        </select>
+
+        {/* Difficulty */}
+        <label htmlFor="difficulty">Difficulty Level:</label>
+        <select
+          id="difficulty"
+          value={difficulty || ''}
+          onChange={(e) => setDifficulty(e.target.value || null)}
+        >
+          <option value="">Any</option>
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="expert">Expert</option>
+        </select>
+
         <button type="submit">Generate Workout</button>
       </form>
 
-      {/* Display loading spinner */}
       {loading && <p>Loading...</p>}
-
-      {/* Display error message */}
       {error && <p className="error">{error}</p>}
 
-      {/* Display fetched workouts */}
       <div className="workouts">
         {workouts.length > 0 ? (
           workouts.map((workout, index) => (
@@ -77,7 +113,13 @@ const WorkoutGen: React.FC = () => {
                 <strong>Type:</strong> {workout.type}
               </p>
               <p>
+                <strong>Muscle:</strong> {workout.muscle}
+              </p>
+              <p>
                 <strong>Equipment:</strong> {workout.equipment || 'None'}
+              </p>
+              <p>
+                <strong>Difficulty:</strong> {workout.difficulty}
               </p>
               <p>
                 <strong>Instructions:</strong> {workout.instructions}
@@ -85,7 +127,7 @@ const WorkoutGen: React.FC = () => {
             </div>
           ))
         ) : (
-          !loading && <p>No workouts found for the selected muscle group.</p>
+          !loading && <p>No workouts found for the selected criteria.</p>
         )}
       </div>
     </div>

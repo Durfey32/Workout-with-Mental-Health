@@ -9,7 +9,15 @@ workout_bp = Blueprint('workout_bp', __name__)
 @workout_bp.route('/api/workout', methods=['GET'])
 def get_workouts():
     muscle = request.args.get('muscle', 'biceps')
+    exercise_type = request.args.get('type')
+    difficulty = request.args.get('difficulty')
+
     api_url = 'https://api.api-ninjas.com/v1/exercises?muscle={}'.format(muscle)
+    if exercise_type:
+        api_url += f"&type={exercise_type}"
+    if difficulty:
+        api_url += f"&difficulty={difficulty}"
+
     api_key = os.getenv('X-API-KEY')
     response = requests.get(api_url, headers={'X-Api-Key': api_key})
     
@@ -17,6 +25,7 @@ def get_workouts():
         return jsonify(response.json())
     else:
         return jsonify({"error": response.status_code, "message": response.text}), response.status_code
+
 
 @workout_bp.route('/api/workout/<id>', methods=['GET'])
 def get_workout(id):
