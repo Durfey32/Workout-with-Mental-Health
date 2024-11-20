@@ -8,7 +8,7 @@ from app.schemas import workout_schema
 import requests
 app = Flask(__name__)
 
-@app.route('/workout', methods=['POST'])
+@app.route('/api/workout', methods=['POST'])
 def add_workout():
     name = request.json['name']
     type = request.json['type']
@@ -21,7 +21,7 @@ def add_workout():
     db.session.commit()
     return workout_schema.jsonify(new_workout)
 
-@app.route('/exercises', methods=['GET'])
+@app.route('/api/workout', methods=['GET'])
 def get_exercises():
     muscle = request.args.get('muscle')
     api_url = 'https://api.api-ninjas.com/v1/exercises?muscle={}'.format(muscle)
