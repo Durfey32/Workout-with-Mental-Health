@@ -27,7 +27,7 @@ useEffect(() => {
 
   return (
     <div className="dashboard">
-      <h1>DASHBOARD</h1>
+      <h1>HOME</h1>
       <p>{quote}</p>
       <p>{quoteAuthor}</p>
       <Navbar />
