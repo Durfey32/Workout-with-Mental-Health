@@ -23,7 +23,9 @@ useEffect(() => {
   };
 
   fetchQuote();
+  
 })
+
 
   return (
     <div className="dashboard">
