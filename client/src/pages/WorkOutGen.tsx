@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 const WorkoutGen: React.FC = () => {
   const [muscle, setMuscle] = useState<string>('biceps');
@@ -35,6 +36,7 @@ const WorkoutGen: React.FC = () => {
 
   return (
     <div className="workout-gen">
+      <Navbar />
       <h2>Generate Your Custom Workout</h2>
       <p>Choose a muscle group and we'll generate a workout plan for you!</p>
 

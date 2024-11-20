@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Navbar from '../components/Navbar';
 
 const Journal: React.FC = () => {
   const [entry, setEntry] = useState<string>('');
@@ -10,6 +11,7 @@ const Journal: React.FC = () => {
 
   return (
     <div className="journal">
+      <Navbar />
       <h2>Your Journal</h2>
       <form onSubmit={handleSaveEntry}>
         <textarea
