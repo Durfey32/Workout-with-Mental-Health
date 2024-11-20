@@ -4,8 +4,8 @@ const Navbar = () => {
   return (
     <nav>
       <div className='navbar'>
-        <Link to="/">Home</Link>
-        <Link to="/dashboard">Dashboard</Link>
+        {/* <Link to="/">Home</Link> */}
+        <Link to="/Home">Home</Link>
         <Link to="/workout-gen">Workout</Link>
         <Link to="/nutrition">Nutrition</Link>
         <Link to="/journal">Journal</Link>

@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 const ContactUs = () => {
     // This is a simple page that displays a contact information
     return (
       <div className="contact-us">
+        <Navbar />
         <h1>Contact Us</h1>
         <p>For any questions or concerns, please contact us at:</p>
 <p>Github:</p>

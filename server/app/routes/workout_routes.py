@@ -3,6 +3,8 @@ from app.models import Workout, workout_schema, workouts_schema
 from app import mongo
 import os
 import requests
+from bson import ObjectId
+from bson.errors import InvalidId
 
 workout_bp = Blueprint('workout_bp', __name__)
 
@@ -27,11 +29,13 @@ def get_workouts():
         return jsonify({"error": response.status_code, "message": response.text}), response.status_code
 
 
-@workout_bp.route('/api/workout/<id>', methods=['GET'])
-def get_workout(id):
+@workout_bp.route('/api/workout/saved', methods=['GET'])
+def get_saved_workouts():
     workout_collection = mongo.db.workouts
-    workout = workout_collection.find_one({'_id': id})
-    return jsonify(workout_schema.dump(workout))
+    saved_workouts = list(workout_collection.find())
+    for workout in saved_workouts:
+        workout['_id'] = str(workout['_id'])  # Convert ObjectId to string
+    return jsonify(saved_workouts)
 
 @workout_bp.route('/api/workout', methods=['POST'])
 def add_workout():
@@ -65,8 +69,11 @@ def update_workout(id):
 
 @workout_bp.route('/api/workout/<id>', methods=['DELETE'])
 def delete_workout(id):
-    workout_collection = mongo.db.workouts
-    workout = workout_collection.find_one({'_id': id})
-
-    workout_collection.remove(workout)
-    return jsonify({'message': 'Workout deleted successfully'})
+    try:
+        workout_collection = mongo.db.workouts
+        result = workout_collection.delete_one({'_id': ObjectId(id)})
+        if result.deleted_count == 0:
+            return jsonify({"message": "Workout not found"}), 404
+        return jsonify({"message": "Workout deleted successfully"}), 200
+    except InvalidId:
+        return jsonify({"message": f"Invalid ObjectId: {id}"}), 400

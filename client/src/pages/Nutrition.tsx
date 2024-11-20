@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 const Nutrition: React.FC = () => {
   interface Meal {
@@ -106,6 +107,7 @@ useEffect(() => {
 
   return (
     <div className="nutrition">
+      <Navbar />
       <h2>Track Your Nutrition</h2>
       <p>Log your meals, track your macros, and stay on top of your diet!</p>
 
