@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 const CreateAccount = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -10,7 +11,7 @@ const CreateAccount = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch('/api/create-account', {
+            const response = await fetch('/api/user', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({username, password})

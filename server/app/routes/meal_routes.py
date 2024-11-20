@@ -8,131 +8,20 @@ meal_bp = Blueprint('meal_bp', __name__)
 
 @meal_bp.route('/api/meal', methods=['GET'])
 def get_meals():
-    app_key = os.getenv('edamam-api-key')
-    app_id = os.getenv('edamam-app-id')
-    # meal = request.args.get('brisket', 'fries')
-    api_url = 'https://api.edamam.com/api/food-database/v2/select'
-    params = {
-  "size": 7,
-  "plan": {
-    "accept": {
-      "all": [
-        {
-          "health": [
-            "SOY_FREE",
-            "FISH_FREE",
-            "MEDITERRANEAN"
-          ]
-        }
-      ]
-    },
-    "fit": {
-      "ENERC_KCAL": {
-        "min": 1000,
-        "max": 2000
-      },
-      "SUGAR.added": {
-        "max": 20
-      }
-    },
-    "exclude": [
-      "http://www.edamam.com/ontologies/edamam.owl#recipe_x",
-      "http://www.edamam.com/ontologies/edamam.owl#recipe_y",
-      "http://www.edamam.com/ontologies/edamam.owl#recipe_z"
-    ],
-    "sections": {
-      "Breakfast": {
-        "accept": {
-          "all": [
-            {
-              "dish": [
-                "drinks",
-                "egg",
-                "biscuits and cookies",
-                "bread",
-                "pancake",
-                "cereals"
-              ]
-            },
-            {
-              "meal": [
-                "breakfast"
-              ]
-            }
-          ]
-        },
-        "fit": {
-          "ENERC_KCAL": {
-            "min": 100,
-            "max": 600
-          }
-        }
-      },
-      "Lunch": {
-        "accept": {
-          "all": [
-            {
-              "dish": [
-                "main course",
-                "pasta",
-                "egg",
-                "salad",
-                "soup",
-                "sandwiches",
-                "pizza",
-                "seafood"
-              ]
-            },
-            {
-              "meal": [
-                "lunch/dinner"
-              ]
-            }
-          ]
-        },
-        "fit": {
-          "ENERC_KCAL": {
-            "min": 300,
-            "max": 900
-          }
-        }
-      },
-      "Dinner": {
-        "accept": {
-          "all": [
-            {
-              "dish": [
-                "seafood",
-                "egg",
-                "salad",
-                "pizza",
-                "pasta",
-                "main course"
-              ]
-            },
-            {
-              "meal": [
-                "lunch/dinner"
-              ]
-            }
-          ]
-        },
-        "fit": {
-          "ENERC_KCAL": {
-            "min": 200,
-            "max": 900
-          }
-        }
-      }
+    x_rapidapi_key = os.getenv('X_RAPIDAPI_KEY')
+    x_rapidapi_host = os.getenv('X_RAPIDAPI_HOST')
+    url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByNutrients"
+    querystring = {"minProtein":"15","maxCalories":"450"}
+    headers = {
+        "x-rapidapi-key": x_rapidapi_key,
+        "x-rapidapi-host": x_rapidapi_host
     }
-  }
- }
-    response = requests.post(api_url, json=params, params={'app_key': app_key, 'app_id': app_id}, headers={'Content-Type': 'application/json'})
-    
-    if response.status_code == requests.codes.ok:
+    response = requests.get(url, headers=headers, params=querystring)
+    print(f"API Key: {x_rapidapi_key}, Host: {x_rapidapi_host}")
+    if response.status_code == 200:
         return jsonify(response.json())
     else:
-        return jsonify({"error": response.status_code, "message": response.text}), response.status_code
+        return jsonify({'message': 'Failed to fetch meals'}), response.status_code
 
 @meal_bp.route('/api/meal/<id>', methods=['GET'])
 def get_meal(id):

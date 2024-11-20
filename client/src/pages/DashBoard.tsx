@@ -7,7 +7,7 @@ const DashBoard: React.FC = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/'); 
+      navigate('/dashboard'); 
     }
   }, [isAuthenticated, navigate]);
 

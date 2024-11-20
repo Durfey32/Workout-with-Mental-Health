@@ -38,6 +38,7 @@ def login():
     if user and check_password_hash(user['password'], password):
         expires = datetime.timedelta(hours=24)
         access_token = create_access_token(identity=str(user['_id']), expires_delta=expires)
+        print(access_token)
         return jsonify({'token': access_token}), 200
     else:
         return jsonify({'message': 'Invalid credentials'}), 401
