@@ -62,3 +62,17 @@ class MealSchema(Schema):
 
 meal_schema = MealSchema()
 meals_schema = MealSchema(many=True)
+
+class Journal:
+    def __init__(self, title, content, timestamp):
+        self.title = title
+        self.content = content
+        self.timestamp = timestamp
+
+class JournalSchema(Schema):
+    title = fields.Str()
+    content = fields.Str()
+    timestamp = fields.DateTime()
+
+journal_schema = JournalSchema()
+journals_schema = JournalSchema(many=True)

@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import  ReactDOM  from 'react-dom/client';
-import './index.css'
+import './app.css'
 
 
 import App from './App.tsx';
@@ -13,6 +13,8 @@ import ContactUs from './pages/ContactUs.tsx';
 import CommChat from './pages/CommChat.tsx';
 import Journal from './pages/Journal.tsx';
 import Workout from './pages/WorkOutGen.tsx';
+import Login from './pages/Login.tsx';
+import Nutrition from './pages/Nutrition';
 
 
 
@@ -31,12 +33,20 @@ const router = createBrowserRouter([
           element: <CreateAccount />
         },
         {
+          path: '/login',
+          element: <Login />
+        },
+        {
           path: 'dashboard',
           element: <DashBoard />
         },
         {
           path: 'workout-gen',
           element: <Workout />
+        },
+        {
+          path: 'nutrition',
+          element: <Nutrition />
         },
         {
           path: 'journal',
