@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "start": "npm run client:build & npm run server",
+    "start": "npm run client:build & npm run client:dev & npm run server",
     "start:dev": "concurrently \"npm run server:dev\" \"wait-on tcp:3001 && npm run client:dev\"",
     "server": "cd server && py app.py",
     "server:dev": "cd server && py app.py --dev",
