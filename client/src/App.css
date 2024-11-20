@@ -37,8 +37,109 @@
   height: 200px;
 }
 
+.contact-us li {
+  display: block;
+  margin: 0 10px;
+  text-align: center ;
+}
+
 body {
   margin-top: 60px; 
+}
+
+.workout-gen {
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.workout-gen form {
+  margin: 20px 0;
+}
+
+.workout-gen select {
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.workout-gen button {
+  padding: 5px 10px;
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.workout-gen button:hover {
+  background-color: #1c7ed6;
+}
+
+.workout-gen .workouts {
+  margin-top: 20px;
+}
+
+.workout-gen .workout {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.workout-gen .error {
+  color: red;
+}
+
+.nutrition {
+  max-width: 800px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.nutrition form {
+  margin-bottom: 20px;
+}
+
+.nutrition input, .nutrition textarea {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 90%;
+  max-width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.nutrition button {
+  padding: 10px 20px;
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.nutrition button:hover {
+  background-color: #1c7ed6;
+}
+
+.nutrition .meals {
+  margin-top: 20px;
+}
+
+.nutrition .meal {
+  margin: 10px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.nutrition .error {
+  color: red;
 }
 
 #root {
