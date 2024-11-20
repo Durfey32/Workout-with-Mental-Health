@@ -40,7 +40,7 @@ const MainPage = () => {
                     <p>{quote}</p>
                     <p>{quoteAuthor}</p>
                 </section>
-                    <p>Already have an Acount please 
+                    <p>Already have an Account please 
                     <Link to="/login"> <button>Login</button></Link>
                         </p>
 
