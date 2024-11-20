@@ -1,14 +1,22 @@
 from flask import Blueprint, jsonify, request
 from app.models import Workout, workout_schema, workouts_schema
 from app import mongo
+import os
+import requests
 
 workout_bp = Blueprint('workout_bp', __name__)
 
 @workout_bp.route('/api/workout', methods=['GET'])
 def get_workouts():
-    workout_collection = mongo.db.workouts
-    workouts = list(workout_collection.find())
-    return jsonify(workouts_schema.dump(workouts))
+    muscle = request.args.get('muscle', 'biceps')
+    api_url = 'https://api.api-ninjas.com/v1/exercises?muscle={}'.format(muscle)
+    api_key = os.getenv('X-API-KEY')
+    response = requests.get(api_url, headers={'X-Api-Key': api_key})
+    
+    if response.status_code == requests.codes.ok:
+        return jsonify(response.json())
+    else:
+        return jsonify({"error": response.status_code, "message": response.text}), response.status_code
 
 @workout_bp.route('/api/workout/<id>', methods=['GET'])
 def get_workout(id):
