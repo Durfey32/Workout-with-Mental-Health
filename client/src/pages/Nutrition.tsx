@@ -42,9 +42,13 @@ const Nutrition: React.FC = () => {
     try {
       const response = await axios.post('/api/meal', newMeal);
       setMeals((prevMeals) => [...prevMeals, response.data]);
-      setNewMeal({ name: '', ingredients: '', calories: '', instructions: '' }); // Clear form
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to add meal');
+      setNewMeal({ name: '', ingredients: '', calories: '', instructions: '' });
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || 'Failed to add meal');
+      } else {
+        setError('Failed to add meal');
+      }
     }
   };
 
