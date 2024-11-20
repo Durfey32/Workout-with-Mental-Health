@@ -44,13 +44,14 @@ workout_schema = WorkoutSchema()
 workouts_schema = WorkoutSchema(many=True)
 
 class Meal:
-    def __init__(self, name, type, calories, protein, carbs, fat):
+    def __init__(self, name, type, calories, protein, carbs, fat, image=""):
         self.name = name
         self.type = type
         self.calories = calories
         self.protein = protein
         self.carbs = carbs
         self.fat = fat
+        self.image = image
 
 class MealSchema(Schema):
     name = fields.Str()
@@ -59,6 +60,7 @@ class MealSchema(Schema):
     protein = fields.Int()
     carbs = fields.Int()
     fat = fields.Int()
+    image = fields.Str()
 
 meal_schema = MealSchema()
 meals_schema = MealSchema(many=True)
