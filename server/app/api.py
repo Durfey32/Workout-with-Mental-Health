@@ -31,3 +31,4 @@ def get_exercises():
         return jsonify(response.json())
     else:
         return jsonify({"error": response.status_code, "message": response.text}), response.status_code
+    
