@@ -9,17 +9,16 @@ const Nutrition: React.FC = () => {
     instructions: string;
   }
 
-  const [meals, setMeals] = useState<Meal[]>([]); 
+  const [meals, setMeals] = useState<Meal[]>([]);
   const [newMeal, setNewMeal] = useState({
     name: '',
     ingredients: '',
     calories: '',
     instructions: '',
-  }); 
-  const [loading, setLoading] = useState<boolean>(false); 
-  const [error, setError] = useState<string | null>(null); 
+  });
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  
   const fetchMeals = async () => {
     setLoading(true);
     setError(null);
@@ -53,66 +52,108 @@ const Nutrition: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchMeals(); 
+    fetchMeals();
   }, []);
 
   return (
-    <div className="nutrition">
-      <h2>Track Your Nutrition</h2>
-      <p>Log your meals, track your macros, and stay on top of your diet!</p>
+    <div className="nutrition container my-5">
+      <h2 className="text-center text-primary mb-4">Track Your Nutrition</h2>
+      <p className="text-center text-secondary">
+        Log your meals, track your macros, and stay on top of your diet!
+      </p>
 
       {/* Add Meal Form */}
-      <form onSubmit={handleAddMeal}>
-        <input
-          type="text"
-          placeholder="Meal Name"
-          value={newMeal.name}
-          onChange={(e) => setNewMeal({ ...newMeal, name: e.target.value })}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Ingredients"
-          value={newMeal.ingredients}
-          onChange={(e) => setNewMeal({ ...newMeal, ingredients: e.target.value })}
-          required
-        />
-        <input
-          type="number"
-          placeholder="Calories"
-          value={newMeal.calories}
-          onChange={(e) => setNewMeal({ ...newMeal, calories: e.target.value })}
-          required
-        />
-        <textarea
-          placeholder="Instructions"
-          value={newMeal.instructions}
-          onChange={(e) => setNewMeal({ ...newMeal, instructions: e.target.value })}
-          required
-        ></textarea>
-        <button type="submit">Add Meal</button>
-      </form>
+      <div className="card shadow p-4 mb-5">
+        <h3 className="text-success mb-3">Add a New Meal</h3>
+        <form onSubmit={handleAddMeal}>
+          <div className="mb-3">
+            <input
+              type="text"
+              placeholder="Meal Name"
+              value={newMeal.name}
+              onChange={(e) => setNewMeal({ ...newMeal, name: e.target.value })}
+              className="form-control"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              placeholder="Ingredients"
+              value={newMeal.ingredients}
+              onChange={(e) =>
+                setNewMeal({ ...newMeal, ingredients: e.target.value })
+              }
+              className="form-control"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="number"
+              placeholder="Calories"
+              value={newMeal.calories}
+              onChange={(e) =>
+                setNewMeal({ ...newMeal, calories: e.target.value })
+              }
+              className="form-control"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <textarea
+              placeholder="Instructions"
+              value={newMeal.instructions}
+              onChange={(e) =>
+                setNewMeal({ ...newMeal, instructions: e.target.value })
+              }
+              className="form-control"
+              rows={3}
+              required
+            ></textarea>
+          </div>
+          <button type="submit" className="btn btn-primary w-100">
+            Add Meal
+          </button>
+        </form>
+      </div>
 
-      {/* Display loading spinner */}
-      {loading && <p>Loading...</p>}
+      {/* Loading Spinner */}
+      {loading && <p className="text-center text-info">Loading...</p>}
 
-      {/* Display error message */}
-      {error && <p className="error">{error}</p>}
+      {/* Error Message */}
+      {error && <p className="text-center text-danger">{error}</p>}
 
-      {/* Display fetched meals */}
+      {/* Display Fetched Meals */}
       <div className="meals">
-        <h3>Logged Meals</h3>
+        <h3 className="text-primary mb-4">Logged Meals</h3>
         {meals.length > 0 ? (
-          meals.map((meal, index) => (
-            <div key={index} className="meal">
-              <h4>{meal.name}</h4>
-              <p><strong>Ingredients:</strong> {meal.ingredients}</p>
-              <p><strong>Calories:</strong> {meal.calories}</p>
-              <p><strong>Instructions:</strong> {meal.instructions}</p>
-            </div>
-          ))
+          <div className="row">
+            {meals.map((meal, index) => (
+              <div key={index} className="col-md-4 mb-4">
+                <div className="card shadow h-100">
+                  <div className="card-body">
+                    <h5 className="card-title text-success">{meal.name}</h5>
+                    <p className="card-text">
+                      <strong>Ingredients:</strong> {meal.ingredients}
+                    </p>
+                    <p className="card-text">
+                      <strong>Calories:</strong> {meal.calories}
+                    </p>
+                    <p className="card-text">
+                      <strong>Instructions:</strong> {meal.instructions}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
-          !loading && <p>No meals logged yet. Start tracking now!</p>
+          !loading && (
+            <p className="text-center text-secondary">
+              No meals logged yet. Start tracking now!
+            </p>
+          )
         )}
       </div>
     </div>

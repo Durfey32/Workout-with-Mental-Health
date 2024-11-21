@@ -3,114 +3,110 @@
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #333;
+  background-image: url('./assets/images/gym-background.webp'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: white;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 10px 20px;
+  padding: 20px;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  min-height: 150px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Adds subtle shadow */
 }
 
 .navbar a {
-  color: #fff; 
-  text-decoration: none; 
-  font-size: 16px; 
-  font-weight: bold; 
-  transition: color 0.3s; 
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 10px;
+  padding: 10px 15px;
+  border: 2px solid #fff; /* White border for contrast */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
 }
 
 .navbar a:hover {
-  color: #1e90ff; 
+  background-color: #ffcc00; /* Highlight background on hover */
+  color: black; /* Text color changes on hover */
+  transform: scale(1.1); /* Slight zoom effect */
 }
 
 .footer {
   background-color: #282c34;
-  padding: '20px';
+  padding: 20px;
   color: white;
   text-align: center;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 200px;
+  height: auto; /* Adjust height for content */
 }
 
-.contact-us li {
-  display: block;
-  margin: 0 10px;
-  text-align: center ;
+.footer a {
+  color: #61dafb;
+  text-decoration: none;
 }
 
+.footer a:hover {
+  color: #1e90ff;
+}
+
+/* Body Spacing */
 body {
-  margin-top: 60px; 
+  margin-top: 150px; /* Match navbar height */
 }
 
+/* Card Styling */
+.card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+}
+
+/* Workout Generator */
 .workout-gen {
   max-width: 600px;
   margin: 20px auto;
   text-align: center;
-  font-family: Arial, sans-serif;
-}
-
-.workout-gen form {
-  margin: 20px 0;
-}
-
-.workout-gen select {
-  padding: 5px;
-  margin-right: 10px;
+  font-family: 'Arial', sans-serif;
 }
 
 .workout-gen button {
-  padding: 5px 10px;
+  padding: 10px 20px;
   background-color: #1e90ff;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .workout-gen button:hover {
   background-color: #1c7ed6;
 }
 
-.workout-gen .workouts {
-  margin-top: 20px;
-}
-
-.workout-gen .workout {
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
-
-.workout-gen .error {
-  color: red;
-}
-
+/* Nutrition Section */
 .nutrition {
   max-width: 800px;
   margin: 20px auto;
-  font-family: Arial, sans-serif;
   text-align: center;
-}
-
-.nutrition form {
-  margin-bottom: 20px;
-}
-
-.nutrition input, .nutrition textarea {
-  display: block;
-  margin: 10px auto;
-  padding: 10px;
-  width: 90%;
-  max-width: 400px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .nutrition button {
@@ -120,28 +116,14 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .nutrition button:hover {
   background-color: #1c7ed6;
 }
 
-.nutrition .meals {
-  margin-top: 20px;
-}
-
-.nutrition .meal {
-  margin: 10px 0;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
-
-.nutrition .error {
-  color: red;
-}
-
+/* Utility Styling */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -149,38 +131,21 @@ body {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
   }
-  to {
-    transform: rotate(360deg);
+
+  .navbar a {
+    margin: 10px 0;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .workout-gen,
+  .nutrition {
+    max-width: 100%;
+    margin: 10px;
+    padding: 15px;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
