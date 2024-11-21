@@ -34,7 +34,7 @@ def get_saved_workouts():
     workout_collection = mongo.db.workouts
     saved_workouts = list(workout_collection.find())
     for workout in saved_workouts:
-        workout['_id'] = str(workout['_id'])  # Convert ObjectId to string
+        workout['_id'] = str(workout['_id'])
     return jsonify(saved_workouts)
 
 @workout_bp.route('/api/workout', methods=['POST'])
