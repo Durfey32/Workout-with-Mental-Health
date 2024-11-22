@@ -3,6 +3,7 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 from app import mongo
+from flask import session
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -28,20 +29,27 @@ def signup():
 
 @user_bp.route('/api/login', methods=['POST'])
 def login():
-    username = request.json.get('username', None)
+    username = request.json.get('username')
     password = request.json.get('password')
+
+    if not username or not password:
+        return jsonify({'message': 'Username and password required'}), 400
 
     user_collection = mongo.db.users
 
     user = user_collection.find_one({'username': username})
-
     if user and check_password_hash(user['password'], password):
         expires = datetime.timedelta(hours=24)
         access_token = create_access_token(identity=str(user['_id']), expires_delta=expires)
         print(access_token)
-        return jsonify({'token': access_token}), 200
+        return jsonify({'token': access_token, 'user_id': str(user['_id'])}), 200
     else:
         return jsonify({'message': 'Invalid credentials'}), 401
+    
+    user = authenticate_user(request.json.get('username'), request.json.get('password'))
+    if user:
+        return jsonify({'message': 'User authenticated'}), 200
+    return jsonify({'message': 'Invalid credentials'}), 401
     
 @user_bp.route('/api/user', methods=['GET'])
 @jwt_required()
