@@ -11,13 +11,14 @@
     "server:prod": "cd server && gunicorn -w 4 -b 0.0.0.0:3001 app:app",
     "server:dev": "cd server && py app.py --dev",
     "install": "cd server && py -m pip install -r requirements.txt && cd ../client && npm i",
+    "render-install": "cd server && pip install -r requirements.txt && cd ../client && npm i",
     "client:build": "cd client && npm run build",
     "client:dev": "cd client && npm run dev",
     "build": "cd server && npm run build",
     "cypress": "npx cypress open",
     "test": "npx cypress run --browser electron --headless",
     "github-install": "cd server && python3 -m pip install -r requirements.txt && cd ../client && npm install",
-    "render-build": "cd server && python3 -m pip install -r requirements.txt && cd ../client && npm install",
+    "render-build": "cd server && pip install -r requirements.txt && cd ../client && npm render-install",
     "render-server": "cd server && py app.py --prod"
   },
   "dependencies": {
