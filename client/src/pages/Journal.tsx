@@ -20,7 +20,7 @@ const Journal: React.FC = () => {
   useEffect(() => {
 
     const storedToken = localStorage.getItem('token');
-    console.log('Token from local storage:', storedToken);
+    // console.log('Token from local storage:', storedToken);
     setToken(storedToken);
     const fetchEntries = async () => {
       try {
