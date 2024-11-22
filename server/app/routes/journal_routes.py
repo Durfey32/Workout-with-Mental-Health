@@ -6,7 +6,7 @@ from flask_jwt_extended import get_jwt_identity
 from datetime import datetime
 
 
-journal_bp = Blueprint('journal_bp', __name__)
+journal_bp = Blueprint('journal', __name__)
 
 # Get all journal entries
 journal_collection = mongo.db.journals
@@ -51,9 +51,12 @@ def add_journal():
         title = request.json.get('title')
         content = request.json.get('content')
         timestamp = request.json.get('timestamp') or datetime.utcnow().isoformat()
-        user_id = request.json.get('user_id')
+        
+        print(f"Received title: {title}, content: {content}, timestamp: {timestamp}")
 
-        if not all([title, content, timestamp, current_user_id]):
+        user_id = get_jwt_identity()
+
+        if not all([title, content, timestamp, user_id]):
             return jsonify({'message': 'Missing required fields'}), 400
 
         new_journal = {
@@ -63,12 +66,12 @@ def add_journal():
             'user_id': user_id
         }
         journal_collection = mongo.db.journals
-        journal_collection.insert_one(new_journal.__dict__)
+        # journal_collection.insert_one(new_journal.__dict__)
         result = journal_collection.insert_one(new_journal)
 
 
         new_journal['_id'] = str(result.inserted_id)
-        return jsonify(journal_schema.dump(new_journal)), 201
+        return jsonify(new_journal), 201
     except Exception as e:
         return jsonify({'message': 'An error occurred while adding the journal entry.', 'error': str(e)}), 500
 

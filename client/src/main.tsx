@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import  ReactDOM  from 'react-dom/client';
 import './App.css'
-
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 import App from './App.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
