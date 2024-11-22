@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-
 const MainPage = () => {
-    const [quote, setQuote] = useState<string | null>(null);
-    const [quoteAuthor, setQuoteAuthor] = useState<string | null>(null);
+  const [quote, setQuote] = useState<string | null>(null);
+  const [quoteAuthor, setQuoteAuthor] = useState<string | null>(null);
 
-    useEffect(() => {
-      // Fetch a random quote from an API
-      const fetchQuote = async () => {
-        try {
-          const response = await fetch('/quotes');
-          if (response.ok) {
+  useEffect(() => {
+    // Fetch a random quote from an API
+    const fetchQuote = async () => {
+      try {
+        const response = await fetch('/quotes'); // Replace with actual API endpoint
+        if (response.ok) {
           const data = await response.json();
           setQuote(data.quoteText);
           setQuoteAuthor(data.quoteAuthor);
@@ -22,17 +21,15 @@ const MainPage = () => {
         console.error('Error fetching quote:', error);
       }
     };
-  
+
     fetchQuote();
   }, []);
 
-
-
-    return (
-        <div>
-            <header>
-                <h1>Welcome Page</h1>
-            </header>
+  return (
+    <div className="main-page">
+      <header className="text-center py-4 bg-light">
+        <h1>Welcome to Our Fitness & Mental Health Platform</h1>
+      </header>
 
             <main>
                 <section>
