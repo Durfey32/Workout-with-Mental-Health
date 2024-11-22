@@ -29,7 +29,22 @@ const Login: React.FC = () => {
             console.log('Error logging in', error);
             setError('Something went wrong');
     }
+
+    const token = localStorage.getItem('token');
+
+fetch('/api/workout', {
+  method: 'GET',
+  headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  }
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
 };
+
+
 
   return (
     <div className="login">

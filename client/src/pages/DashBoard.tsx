@@ -14,6 +14,7 @@ interface Workout {
   name: string;
   muscle: string;
   equipment?: string;
+  instructions: string;
 }
 interface Meal {
   _id: string;
@@ -23,7 +24,7 @@ interface Meal {
   protein: string;
   fat: string;
   carbs: string;
-  // image: string;
+  image: string;
 }
 
 const fetchQuote = async () => {
@@ -84,8 +85,10 @@ fetchData();
   return (
     <div className="dashboard">
       <h1>HOME</h1>
-      <p>{quote}</p>
-      <p>{quoteAuthor}</p>
+      <div className='quotes'>
+        <p>{quote}</p>
+        <p>-{quoteAuthor}</p>
+      </div>
       <Navbar />
       <h2>Welcome to Your Fitness & Mental Health Dashboard</h2>
       <p>Track your progress, access workouts, and Journal!</p>
@@ -98,6 +101,7 @@ fetchData();
             <p><strong>Type:</strong> {workout.type}</p>
             <p><strong>Muscle:</strong> {workout.muscle}</p>
             <p><strong>Equipment:</strong> {workout.equipment || 'None'}</p>
+            <p><strong>Instructions</strong> {workout.instructions}</p>
           </div>
           ))
         ) : (
@@ -114,6 +118,7 @@ fetchData();
         <p><strong>Protein:</strong> {meal.protein}g</p>
         <p><strong>Fat:</strong> {meal.fat}g</p>
         <p><strong>Carbs:</strong> {meal.carbs}g</p>
+        <img src={meal.image} alt={meal.name} />
       </div>
     ))
   ) : (
