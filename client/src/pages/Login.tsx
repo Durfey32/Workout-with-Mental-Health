@@ -17,7 +17,6 @@ const Login: React.FC = () => {
         body: JSON.stringify({ username, password }),
       });
 
-<<<<<<< HEAD
         if (response.ok) {
             const data = await response.json();
             localStorage.setItem('token', data.token);
@@ -29,18 +28,6 @@ const Login: React.FC = () => {
         } catch (error) {
             console.log('Error logging in', error);
             setError('Something went wrong');
-=======
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('token', data.token);
-        navigate('/home');
-      } else {
-        setError('Invalid username or password');
-      }
-    } catch (error) {
-      console.error('Error logging in', error);
-      setError('Something went wrong. Please try again.');
->>>>>>> 2663fff4286bb2d8b7eaf2c9f2c6277bb770c467
     }
 
     const token = localStorage.getItem('token');
