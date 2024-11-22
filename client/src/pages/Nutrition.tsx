@@ -218,7 +218,7 @@ useEffect(() => {
         <p><strong>Fat:</strong> {meal.fat}g</p>
         <p><strong>Carbs:</strong> {meal.carbs}g</p>
         {meal.image && <img src={meal.image} alt={meal.name} />}
-        <button onClick={() => removeMeal(meal._id)}>Remove</button>
+        <button onClick={() => removeMeal(meal._id)}>Delete</button>
       </div>
     ))
   ) : (

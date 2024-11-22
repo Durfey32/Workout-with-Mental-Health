@@ -37,6 +37,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Tests
 Example tests are provided in the `tests/` directory to ensure the functionality of core features.
+https://workout-with-mental-health.onrender.com
 
 ## Questions?
 For any questions, feel free to reach out:

@@ -45,7 +45,18 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: auto; /* Adjust height for content */
+  height: 75px;
+}
+
+.quotes {
+  max-width: 800px;
+  margin: 20px auto;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+  font-size: large;
+  padding: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  box-shadow: #282c34 0px 0px 2px;
 }
 
 .footer a {
@@ -123,7 +134,71 @@ body {
   background-color: #1c7ed6;
 }
 
-/* Utility Styling */
+.nutrition .meals {
+  margin-top: 20px;
+}
+
+.nutrition .meal {
+  margin: 10px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.nutrition .error {
+  color: red;
+}
+
+.dashboard {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.dashboard h1,
+.dashboard h2,
+.dashboard h3,
+.dashboard h4 {
+  margin: 10px 0;
+}
+
+.saved-workouts,
+.saved-meals {
+  margin-top: 20px;
+}
+
+.workout,
+.meal {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+}
+
+.workout h3,
+.meal h4 {
+  margin-top: 0;
+}
+
+.meal img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+p {
+  margin: 5px 0;
+}
+
+
 #root {
   max-width: 1280px;
   margin: 0 auto;

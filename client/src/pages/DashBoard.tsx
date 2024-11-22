@@ -15,6 +15,7 @@ interface Workout {
   name: string;
   muscle: string;
   equipment?: string;
+  instructions: string;
 }
 interface Meal {
   _id: string;
@@ -24,7 +25,7 @@ interface Meal {
   protein: string;
   fat: string;
   carbs: string;
-  // image: string;
+  image: string;
 }
 
 const fetchQuote = async () => {
@@ -83,61 +84,50 @@ fetchData();
 
 
   return (
-    <div className="dashboard container mt-5">
-      <div className="text-center mb-4">
-        <h2 className="display-4 text-primary">Welcome to Your Dashboard</h2>
-        <p className="lead text-secondary">
-          Track your progress, access workouts, and reflect in your journal!
-        </p>
+    <div className="dashboard">
+      <h1>HOME</h1>
+      <div className='quotes'>
+        <p>{quote}</p>
+        <p>-{quoteAuthor}</p>
       </div>
-
-      <div className="row text-center">
-        {/* Workouts Section */}
-        <div className="col-md-4 mb-4">
-          <div className="card shadow-sm">
-            <div className="card-body">
-              <h5 className="card-title text-success">Workouts</h5>
-              <p className="card-text">
-                Access your personalized workout plans and track your fitness goals.
-              </p>
-              <a href="/workout-gen" className="btn btn-outline-success">
-                Go to Workouts
-              </a>
-            </div>
+      <Navbar />
+      <h2>Welcome to Your Fitness & Mental Health Dashboard</h2>
+      <p>Track your progress, access workouts, and Journal!</p>
+      <div className="saved-workouts">
+        <h3>Saved Workouts</h3>
+        {savedWorkouts.length > 0 ? (
+          savedWorkouts.map((workout) => (
+            <div key={workout._id || workout.name} className="workout">
+            <h3>{workout.name}</h3>
+            <p><strong>Type:</strong> {workout.type}</p>
+            <p><strong>Muscle:</strong> {workout.muscle}</p>
+            <p><strong>Equipment:</strong> {workout.equipment || 'None'}</p>
+            <p><strong>Instructions</strong> {workout.instructions}</p>
           </div>
-        </div>
-
-        {/* Journal Section */}
-        <div className="col-md-4 mb-4">
-          <div className="card shadow-sm">
-            <div className="card-body">
-              <h5 className="card-title text-warning">Journal</h5>
-              <p className="card-text">
-                Reflect on your day and log your thoughts in your private journal.
-              </p>
-              <a href="/journal" className="btn btn-outline-warning">
-                Go to Journal
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Nutrition Section */}
-        <div className="col-md-4 mb-4">
-          <div className="card shadow-sm">
-            <div className="card-body">
-              <h5 className="card-title text-info">Nutrition</h5>
-              <p className="card-text">
-                View meal plans and track your daily calorie intake.
-              </p>
-              <a href="/nutrition" className="btn btn-outline-info">
-                Go to Nutrition
-              </a>
-            </div>
-          </div>
-        </div>
+          ))
+        ) : (
+          <p>No saved workouts yet.</p>
+        )}
       </div>
-    </div>
+      <div className="saved-meals">
+  <h3>Saved Meals</h3>
+  {savedMeals.length > 0 ? (
+    savedMeals.map((meal, index) => (
+      <div key={index} className="meal">
+        <h4><strong>Meal Title:</strong> {meal.name}</h4>
+        <p><strong>Calories:</strong> {meal.calories}</p>
+        <p><strong>Protein:</strong> {meal.protein}g</p>
+        <p><strong>Fat:</strong> {meal.fat}g</p>
+        <p><strong>Carbs:</strong> {meal.carbs}g</p>
+        <img src={meal.image} alt={meal.name} />
+      </div>
+    ))
+  ) : (
+    <p>No meals saved yet.</p>
+  )}
+</div>
+      
+      </div>
   );
 };
 
