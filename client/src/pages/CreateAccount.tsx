@@ -18,7 +18,7 @@ const CreateAccount: React.FC = () => {
       });
 
       if (response.ok) {
-        navigate('/dashboard');
+        navigate('/home');
       } else {
         setError('Failed to create account. Please try again.');
       }
