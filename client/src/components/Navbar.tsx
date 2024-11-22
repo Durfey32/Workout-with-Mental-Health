@@ -37,16 +37,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-    <nav>
-      
-      <div className='navbar'>
-        <h1>FitTrack</h1>
-        <Link to="/Home">Home</Link>
-        <Link to="/workout-gen">Workout</Link>
-        <Link to="/nutrition">Nutrition</Link>
-        <Link to="/journal">Journal</Link>
-        <Link to="/settings">Settings</Link>
-      </div>
+        </div>
     </nav>
   );
 };

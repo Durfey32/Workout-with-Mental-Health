@@ -1,4 +1,3 @@
-import React from 'react';
 import React, { ReactNode, useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
@@ -131,4 +130,4 @@ fetchData();
   );
 };
 
-export default DashBoard;
+export default Home;
