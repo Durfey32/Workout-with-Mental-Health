@@ -106,8 +106,9 @@ useEffect(() => {
 }, []);
 
   return (
-    <div className="nutrition">
+    <div>
       <Navbar />
+      <div  className="nutrition">
       <h2>Track Your Nutrition</h2>
       <p>Log your meals, track your macros, and stay on top of your diet!</p>
 
@@ -225,6 +226,7 @@ useEffect(() => {
     <p>No meals saved yet.</p>
   )}
 </div>
+    </div>
     </div>
   );
 };

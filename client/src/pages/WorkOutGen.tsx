@@ -94,8 +94,9 @@ const WorkoutGen: React.FC = () => {
   }, []);
 
   return (
-    <div className="workout-gen">
+    <div>
       <Navbar />
+      <div className="workout-gen">
       <h2>Generate Your Custom Workout</h2>
       <p>Select parameters to generate a workout list tailored to your needs!</p>
 
@@ -190,6 +191,7 @@ const WorkoutGen: React.FC = () => {
           <p>No saved workouts yet.</p>
         )}
       </div>
+    </div>
     </div>
   );
 };

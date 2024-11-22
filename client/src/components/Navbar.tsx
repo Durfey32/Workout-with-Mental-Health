@@ -4,17 +4,10 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/Home">
           Home
         </Link>
-       
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav w-100 d-flex justify-content-between">
-            <li className="nav-item">
-              <Link className="nav-link" to="/dashboard">
-                Dashboard
-              </Link>
-            </li>
+          <ul className="navbar-nav">
             <li className="nav-item">
               <Link className="nav-link" to="/workout-gen">
                 Workout
@@ -37,7 +30,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        </div>
+
     </nav>
   );
 };

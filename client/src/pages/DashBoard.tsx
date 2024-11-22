@@ -84,12 +84,12 @@ fetchData();
 
   return (
     <div className="dashboard">
+      <Navbar />
       <h1>HOME</h1>
       <div className='quotes'>
         <p>{quote}</p>
         <p>-{quoteAuthor}</p>
       </div>
-      <Navbar />
       <h2>Welcome to Your Fitness & Mental Health Dashboard</h2>
       <p>Track your progress, access workouts, and Journal!</p>
       <div className="saved-workouts">
