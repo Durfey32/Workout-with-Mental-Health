@@ -7,7 +7,7 @@ import App from './App.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
 import MainPage from './pages/MainPage.tsx';
 import CreateAccount from './pages/CreateAccount.tsx';
-import DashBoard from './pages/DashBoard.tsx';
+import Home from './pages/DashBoard.tsx';
 import SettingsInfo from './pages/SettingsInfo.tsx';
 import ContactUs from './pages/ContactUs.tsx';
 import Journal from './pages/Journal.tsx';
@@ -36,8 +36,8 @@ const router = createBrowserRouter([
           element: <Login />
         },
         {
-          path: '/dashboard',
-          element: <DashBoard />
+          path: '/home',
+          element: <Home />
         },
         {
           path: 'workout-gen',

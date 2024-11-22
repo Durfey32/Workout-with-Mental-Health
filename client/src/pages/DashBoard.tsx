@@ -1,6 +1,87 @@
 import React from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
+import Navbar from '../components/Navbar';
+import axios from 'axios';
 
-const DashBoard: React.FC = () => {
+const Home: React.FC = () => {
+const [quote, setQuote] = useState<string | null>(null);
+const [quoteAuthor, setQuoteAuthor] = useState<string | null>(null);
+const [savedWorkouts, setSavedWorkouts] = useState<Workout[]>([]);
+const [savedMeals, setSavedMeals] = useState<Meal[]>([]);
+
+interface Workout {
+  type: ReactNode;
+  _id?: string;
+  name: string;
+  muscle: string;
+  equipment?: string;
+}
+interface Meal {
+  _id: string;
+  name: string;
+  title: string;
+  calories: number;
+  protein: string;
+  fat: string;
+  carbs: string;
+  // image: string;
+}
+
+const fetchQuote = async () => {
+  try {
+    const response = await fetch('/quotes');
+    if (response.ok) {
+      const data = await response.json();
+      setQuote(data.quoteText);
+      setQuoteAuthor(data.quoteAuthor);
+    } else {
+      console.error('Failed to fetch quote');
+    }
+  } catch (error) {
+    console.error('Error fetching quote:', error);
+  }
+  };
+  
+  
+  const fetchSavedWorkout = async () => {
+    try {
+      const response = await axios.get('/api/workout/saved');
+      console.log('Fetched Saved Workouts:', response.data); // Debug log
+      setSavedWorkouts(response.data);
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+      console.error(err.response?.data?.message || 'Failed to fetch saved workouts');
+    } else {
+      console.error('Failed to fetch saved workouts');
+    }
+  }
+};
+
+const fetchSavedMeals = async () => {
+  try {
+    const response = await axios.get('/api/meal/saved');
+    console.log('Fetched Saved Meals:', response.data); // Debug log
+    setSavedMeals(response.data);
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      console.error(err.response?.data?.message || 'Failed to fetch saved meals');
+    } else {
+      console.error('Failed to fetch saved meals');
+    }
+  }
+};
+
+useEffect(() => {
+const fetchData = async () => {
+  await fetchQuote();
+  await fetchSavedWorkout();
+  await fetchSavedMeals();
+};
+fetchData();
+  
+}, []);
+
+
   return (
     <div className="dashboard container mt-5">
       <div className="text-center mb-4">

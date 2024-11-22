@@ -31,38 +31,20 @@ const MainPage = () => {
         <h1>Welcome to Our Fitness & Mental Health Platform</h1>
       </header>
 
-      <main className="container text-center py-5">
-        {/* Quote Section */}
-        <section className="mb-4">
-          <h2 className="mb-3">Quote of the Day</h2>
-          {quote ? (
-            <blockquote className="blockquote">
-              <p className="mb-2">"{quote}"</p>
-              <footer className="blockquote-footer">{quoteAuthor || 'Unknown'}</footer>
-            </blockquote>
-          ) : (
-            <p>Loading quote...</p>
-          )}
-        </section>
+            <main>
+                <section>
+                    <h2>Quote of the Day</h2>
+                    <p>{quote}</p>
+                    <p>{quoteAuthor}</p>
+                </section>
+                    <p>Already have an Account please 
+                    <Link to="/login"> <button>Login</button></Link>
+                        </p>
 
-        {/* Login/Account Links */}
-        <section>
-          <p>
-            Already have an account?{' '}
-            <Link to="/login">
-              <button className="btn btn-primary">Login</button>
-            </Link>
-          </p>
-          <p>
-            Don't have an account?{' '}
-            <Link to="/create-account">
-              <button className="btn btn-success">Create One</button>
-            </Link>
-          </p>
-        </section>
-      </main>
-    </div>
-  );
-};
+                    <p>Don't have an account? <Link to="/create-account"><button>Create one</button></Link></p>
+            </main>
+        </div>
+    );
+}
 
 export default MainPage;

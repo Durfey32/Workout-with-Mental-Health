@@ -18,7 +18,7 @@ const ContactUs: React.FC = () => {
                 rel="noopener noreferrer"
                 className="text-decoration-none text-dark"
               >
-                Spencer Durfey
+                durfe32
               </a>
             </li>
             <li className="list-group-item">
@@ -28,7 +28,7 @@ const ContactUs: React.FC = () => {
                 rel="noopener noreferrer"
                 className="text-decoration-none text-dark"
               >
-                Tavin Sowell
+                Tavinsowell
               </a>
             </li>
             <li className="list-group-item">
@@ -38,7 +38,7 @@ const ContactUs: React.FC = () => {
                 rel="noopener noreferrer"
                 className="text-decoration-none text-dark"
               >
-                Angel Fernandez
+                b3hold23
               </a>
             </li>
             <li className="list-group-item">
@@ -48,7 +48,7 @@ const ContactUs: React.FC = () => {
                 rel="noopener noreferrer"
                 className="text-decoration-none text-dark"
               >
-                Matthew Holmes
+                SirMac006
               </a>
             </li>
           </ul>

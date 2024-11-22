@@ -24,13 +24,14 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
 class Workout:
-    def __init__(self, name, type, muscle, equipment, difficulty, instructions):
+    def __init__(self, name, type, muscle, equipment, difficulty, instructions, user_id):
         self.name = name
         self.type = type
         self.muscle = muscle
         self.equipment = equipment
         self.difficulty = difficulty
         self.instructions = instructions
+        self.user_id = user_id
 
 class WorkoutSchema(Schema):
     name = fields.Str()
@@ -39,18 +40,21 @@ class WorkoutSchema(Schema):
     equipment = fields.Str()
     difficulty = fields.Str()
     instructions = fields.Str()
+    user_id = fields.Str()
 
 workout_schema = WorkoutSchema()
 workouts_schema = WorkoutSchema(many=True)
 
 class Meal:
-    def __init__(self, name, type, calories, protein, carbs, fat):
+    def __init__(self, name, type, calories, protein, carbs, fat, user_id, image=""):
         self.name = name
         self.type = type
         self.calories = calories
         self.protein = protein
         self.carbs = carbs
         self.fat = fat
+        self.user_id = user_id
+        self.image = image
 
 class MealSchema(Schema):
     name = fields.Str()
@@ -59,20 +63,24 @@ class MealSchema(Schema):
     protein = fields.Int()
     carbs = fields.Int()
     fat = fields.Int()
+    user_id = fields.Str()
+    image = fields.Str()
 
 meal_schema = MealSchema()
 meals_schema = MealSchema(many=True)
 
 class Journal:
-    def __init__(self, title, content, timestamp):
+    def __init__(self, title, content, timestamp, user_id):
         self.title = title
         self.content = content
         self.timestamp = timestamp
+        self.user_id = user_id
 
 class JournalSchema(Schema):
     title = fields.Str()
     content = fields.Str()
     timestamp = fields.DateTime()
+    user_id = fields.Str()
 
 journal_schema = JournalSchema()
 journals_schema = JournalSchema(many=True)
