@@ -131,5 +131,3 @@ fetchData();
 };
 
 export default Home;
-
-

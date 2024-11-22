@@ -180,11 +180,11 @@ useEffect(() => {
         <button onClick={generateMeals}>Generate Meal Options</button>
       </div>
 
-      {/* Display loading spinner */}
-      {loading && <p>Loading...</p>}
+      {/* Loading Spinner */}
+      {loading && <p className="text-center text-info">Loading...</p>}
 
-      {/* Display error message */}
-      {error && <p className="error">{error}</p>}
+      {/* Error Message */}
+      {error && <p className="text-center text-danger">{error}</p>}
 
       {/* Display generated meals */}
       <div className="generated-meals">
