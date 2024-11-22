@@ -47,6 +47,7 @@ def get_journal(id):
 
 # Add a new journal entry
 @journal_bp.route('/api/journal', methods=['POST'])
+@jwt_required()
 def add_journal():
     try:
         current_user_id = get_jwt_identity()
@@ -56,7 +57,8 @@ def add_journal():
         
         print(f"Received title: {title}, content: {content}, timestamp: {timestamp}")
 
-        user_id = get_jwt_identity()
+        user_id = current_user_id
+        # print(request.headers.get('Authorization'))
 
         if not all([title, content, timestamp, user_id]):
             return jsonify({'message': 'Missing required fields'}), 400

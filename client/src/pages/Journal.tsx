@@ -42,13 +42,10 @@ const Journal: React.FC = () => {
 
   // Create a new journal entry
   const createEntry = async (entryContent: string) => {
-    const userId = localStorage.getItem('user_id');
     const token = localStorage.getItem('token');
 
-    console.log('User Id from local storage:', userId);
-    console.log('Token from local storage:', token);
-
-    if (!userId || !token) {
+    // console.log('Token from local storage:', token);
+    if (!token) {
       setError('The Token is not getting pulled.');
       return;
     }
@@ -64,7 +61,6 @@ const Journal: React.FC = () => {
           title: 'Journal Entry', // Default title
           content: entryContent,
           timestamp: new Date().toISOString(),
-          user_id: userId,
         }),
       });
 
