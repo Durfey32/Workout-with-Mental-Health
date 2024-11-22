@@ -14,9 +14,14 @@ const Journal: React.FC = () => {
   const [editMode, setEditMode] = useState<string | null>(null); // ID of entry being edited
   const [editContent, setEditContent] = useState<string>(''); // Temporary edited content
   const [error, setError] = useState<string | null>(null); // Error message for user feedback
+  const [, setToken] = useState<string | null>(null);
 
   // Fetch all journal entries from the backend
   useEffect(() => {
+
+    const storedToken = localStorage.getItem('token');
+    console.log('Token from local storage:', storedToken);
+    setToken(storedToken);
     const fetchEntries = async () => {
       try {
         const response = await fetch('/api/journal');
@@ -38,13 +43,13 @@ const Journal: React.FC = () => {
   // Create a new journal entry
   const createEntry = async (entryContent: string) => {
     const userId = localStorage.getItem('user_id');
-    const token = localStorage.getItem('jwt_token');
+    const token = localStorage.getItem('token');
 
     console.log('User Id from local storage:', userId);
     console.log('Token from local storage:', token);
 
     if (!userId || !token) {
-      setError('User ID not found. Please log in again.');
+      setError('The Token is not getting pulled.');
       return;
     }
 

@@ -49,6 +49,7 @@ def get_journal(id):
 @journal_bp.route('/api/journal', methods=['POST'])
 def add_journal():
     try:
+        current_user_id = get_jwt_identity()
         title = request.json.get('title')
         content = request.json.get('content')
         timestamp = request.json.get('timestamp') or datetime.utcnow().isoformat()
