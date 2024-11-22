@@ -20,3 +20,8 @@ virtualenv
 pymongo
 Flask
 flask_pymongo
+gunicorn
+waitress
+flask_marshmallow
+marshmallow-sqlalchemy
+requests

@@ -1,8 +1,10 @@
 import React from 'react';
+import Navbar from '../components/Navbar';
 
 const ContactUs: React.FC = () => {
   return (
     <div className="contact-us container my-5">
+      <Navbar />
       <h1 className="text-center text-primary mb-4">Contact Us</h1>
       <p className="text-center text-secondary">
         For any questions or concerns, please contact us at:
