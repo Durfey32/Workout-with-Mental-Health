@@ -8,6 +8,7 @@
     "render-start": "npm run client:build & npm run client:dev & npm run render-server",
     "start:dev": "concurrently \"npm run server:dev\" \"wait-on tcp:3001 && npm run client:dev\"",
     "server": "cd server && py app.py",
+    "server:prod": "cd server && gunicorn -w 4 -b 0.0.0.0:3001 app:app",
     "server:dev": "cd server && py app.py --dev",
     "install": "cd server && py -m pip install -r requirements.txt && cd ../client && npm i",
     "client:build": "cd client && npm run build",
@@ -17,7 +18,7 @@
     "test": "npx cypress run --browser electron --headless",
     "github-install": "cd server && python3 -m pip install -r requirements.txt && cd ../client && npm install",
     "render-build": "cd server && python3 -m pip install -r requirements.txt && cd ../client && npm install",
-    "render-server": "cd server && python3 app.py"
+    "render-server": "cd server && py app.py --prod"
   },
   "dependencies": {
     "axios": "^1.7.7",
