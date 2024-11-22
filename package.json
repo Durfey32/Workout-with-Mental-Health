@@ -16,7 +16,7 @@
     "cypress": "npx cypress open",
     "test": "npx cypress run --browser electron --headless",
     "github-install": "cd server && python3 -m pip install -r requirements.txt && cd ../client && npm install",
-    "render-intstall": "cd server && python3 -m pip install -r requirements.txt && cd ../client && npm install",
+    "render-build": "cd server && python3 -m pip install -r requirements.txt && cd ../client && npm install",
     "render-server": "cd server && python3 app.py"
   },
   "dependencies": {
