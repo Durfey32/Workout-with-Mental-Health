@@ -4,6 +4,7 @@ from app.models import Journal, journal_schema, journals_schema
 from bson.objectid import ObjectId
 from flask_jwt_extended import get_jwt_identity
 from datetime import datetime
+from flask_jwt_extended import jwt_required
 
 
 journal_bp = Blueprint('journal', __name__)
@@ -73,6 +74,7 @@ def add_journal():
         new_journal['_id'] = str(result.inserted_id)
         return jsonify(new_journal), 201
     except Exception as e:
+        print(f'Error: {e}')
         return jsonify({'message': 'An error occurred while adding the journal entry.', 'error': str(e)}), 500
 
 

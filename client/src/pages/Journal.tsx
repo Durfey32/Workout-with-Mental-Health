@@ -38,7 +38,12 @@ const Journal: React.FC = () => {
   // Create a new journal entry
   const createEntry = async (entryContent: string) => {
     const userId = localStorage.getItem('user_id');
-    if (!userId) {
+    const token = localStorage.getItem('jwt_token');
+
+    console.log('User Id from local storage:', userId);
+    console.log('Token from local storage:', token);
+
+    if (!userId || !token) {
       setError('User ID not found. Please log in again.');
       return;
     }
@@ -46,7 +51,10 @@ const Journal: React.FC = () => {
     try {
       const response = await fetch('/api/journal', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
         body: JSON.stringify({
           title: 'Journal Entry', // Default title
           content: entryContent,
