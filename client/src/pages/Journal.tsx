@@ -11,6 +11,9 @@ interface JournalEntry {
 const Journal: React.FC = () => {
   const [entry, setEntry] = useState<string>(''); // Current entry content
   const [entries, setEntries] = useState<JournalEntry[]>([]); // All journal entries
+  const [editMode, setEditMode] = useState<string | null>(null); // ID of entry being edited
+  const [editContent, setEditContent] = useState<string>(''); // Temporary edited content
+  const [error, setError] = useState<string | null>(null); // Error message for user feedback
 
   // Fetch all journal entries from the backend
   useEffect(() => {
@@ -21,10 +24,11 @@ const Journal: React.FC = () => {
           const data = await response.json();
           setEntries(data);
         } else {
-          console.error('Failed to fetch journal entries');
+          setError('Failed to fetch journal entries.');
         }
       } catch (error) {
-        console.error('An error occurred while fetching entries:', error);
+        setError('An error occurred while fetching entries.');
+        console.error(error);
       }
     };
 
@@ -33,14 +37,21 @@ const Journal: React.FC = () => {
 
   // Create a new journal entry
   const createEntry = async (entryContent: string) => {
+    const userId = localStorage.getItem('user_id');
+    if (!userId) {
+      setError('User ID not found. Please log in again.');
+      return;
+    }
+
     try {
       const response = await fetch('/api/journal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: 'Journal Entry', // Default title
-          content: entryContent, // Entry content
-          timestamp: new Date().toISOString(), // Current timestamp
+          content: entryContent,
+          timestamp: new Date().toISOString(),
+          user_id: userId,
         }),
       });
 
@@ -48,14 +59,46 @@ const Journal: React.FC = () => {
         const newEntry = await response.json();
         setEntries((prevEntries) => [...prevEntries, newEntry]);
       } else {
-        console.error('Failed to create entry');
+        const errorData = await response.json();
+        setError(errorData.message || 'Failed to create entry.');
       }
     } catch (error) {
-      console.error('An error occurred while creating an entry:', error);
+      setError('An error occurred while creating an entry.');
+      console.error(error);
     }
   };
 
-  // Delete an existing journal entry
+  
+  const updateEntry = async (id: string, updatedContent: string) => {
+    try {
+      const response = await fetch(`/api/journal/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: 'Updated Journal Entry', // Example updated title
+          content: updatedContent,
+          timestamp: new Date().toISOString(),
+          user_id: 'exampleUserId', // Replace with actual user ID if applicable
+        }),
+      });
+
+      if (response.ok) {
+        const updatedEntry = await response.json();
+        setEntries((prevEntries) =>
+          prevEntries.map((entry) => (entry._id === id ? updatedEntry : entry))
+        );
+        setEditMode(null);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || 'Failed to update entry.');
+      }
+    } catch (error) {
+      setError('An error occurred while updating an entry.');
+      console.error(error);
+    }
+  };
+
+  // Delete a journal entry
   const deleteEntry = async (id: string) => {
     try {
       const response = await fetch(`/api/journal/${id}`, {
@@ -65,14 +108,15 @@ const Journal: React.FC = () => {
       if (response.ok) {
         setEntries((prevEntries) => prevEntries.filter((entry) => entry._id !== id));
       } else {
-        console.error('Failed to delete entry');
+        setError('Failed to delete entry.');
       }
     } catch (error) {
-      console.error('An error occurred while deleting an entry:', error);
+      setError('An error occurred while deleting an entry.');
+      console.error(error);
     }
   };
 
-  // Handle form submission
+  // Handle form submission for new entry
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (entry.trim()) {
@@ -100,14 +144,42 @@ const Journal: React.FC = () => {
 
       <section>
         <h3>Your Journal Entries</h3>
+        {error && <p className="error-message">{error}</p>} {/* Display errors */}
         {entries.length > 0 ? (
           <ul>
             {entries.map((entry) => (
               <li key={entry._id} className="journal-entry">
-                <h4>{entry.title}</h4>
-                <p>{entry.content}</p>
-                <small>{new Date(entry.timestamp).toLocaleString()}</small>
-                <button onClick={() => deleteEntry(entry._id)}>Delete</button>
+                {editMode === entry._id ? (
+                  <>
+                    <textarea
+                      value={editContent}
+                      onChange={(e) => setEditContent(e.target.value)}
+                    />
+                    <button
+                      onClick={() => {
+                        updateEntry(entry._id, editContent);
+                      }}
+                    >
+                      Save
+                    </button>
+                    <button onClick={() => setEditMode(null)}>Cancel</button>
+                  </>
+                ) : (
+                  <>
+                    <h4>{entry.title}</h4>
+                    <p>{entry.content}</p>
+                    <small>{new Date(entry.timestamp).toLocaleString()}</small>
+                    <button
+                      onClick={() => {
+                        setEditMode(entry._id);
+                        setEditContent(entry.content);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button onClick={() => deleteEntry(entry._id)}>Delete</button>
+                  </>
+                )}
               </li>
             ))}
           </ul>

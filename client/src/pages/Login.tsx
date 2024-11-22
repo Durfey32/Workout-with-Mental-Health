@@ -21,6 +21,7 @@ const Login: React.FC = () => {
         if (response.ok) {
             const data = await response.json();
             localStorage.setItem('token', data.token);
+            localStorage.setItem('user_id', data.user_id);
             navigate('/home');
         } else {
             setError('Invalid username or password');
