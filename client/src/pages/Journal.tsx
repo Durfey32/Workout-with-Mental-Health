@@ -82,56 +82,37 @@ const Journal: React.FC = () => {
   };
 
   return (
-    <div className="journal container my-5">
+    <div className="journal">
       <Navbar />
-      <section className="mb-5">
-        <h2 className="text-center text-primary mb-4">Journal</h2>
-        <form onSubmit={handleSubmit} className="card shadow p-4">
-          <div className="mb-3">
-            <label htmlFor="entry" className="form-label">
-              Write your journal entry:
-            </label>
-            <textarea
-              id="entry"
-              className="form-control"
-              value={entry}
-              onChange={(event) => setEntry(event.target.value)}
-              rows={4}
-              required
-            />
-          </div>
-          <button type="submit" className="btn btn-primary w-100">
-            Submit
-          </button>
+      <section>
+        <h2>Journal</h2>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="entry">Write your journal entry:</label>
+          <textarea
+            id="entry"
+            value={entry}
+            onChange={(event) => setEntry(event.target.value)}
+            required
+          />
+          <button type="submit">Submit</button>
         </form>
       </section>
 
       <section>
-        <h3 className="text-secondary mb-4">Your Journal Entries</h3>
+        <h3>Your Journal Entries</h3>
         {entries.length > 0 ? (
-          <div className="row g-3">
+          <ul>
             {entries.map((entry) => (
-              <div key={entry._id} className="col-md-6">
-                <div className="card shadow-sm h-100">
-                  <div className="card-body">
-                    <h4 className="card-title text-info">{entry.title}</h4>
-                    <p className="card-text">{entry.content}</p>
-                    <small className="text-muted">
-                      {new Date(entry.timestamp).toLocaleString()}
-                    </small>
-                    <button
-                      onClick={() => deleteEntry(entry._id)}
-                      className="btn btn-outline-danger mt-3 w-100"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <li key={entry._id} className="journal-entry">
+                <h4>{entry.title}</h4>
+                <p>{entry.content}</p>
+                <small>{new Date(entry.timestamp).toLocaleString()}</small>
+                <button onClick={() => deleteEntry(entry._id)}>Delete</button>
+              </li>
             ))}
-          </div>
+          </ul>
         ) : (
-          <p className="text-center text-muted">No journal entries yet. Start writing!</p>
+          <p>No journal entries yet. Start writing!</p>
         )}
       </section>
     </div>
