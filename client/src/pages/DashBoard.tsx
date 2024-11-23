@@ -85,10 +85,20 @@ const fetchJournalEntries = async () => {
     console.log('Fetched Journal Entries:', response.data); // Debug log
 
     if (response.data.length > 0) {
+      // Sort entries based on timestamp
       const sortedEntries = response.data.sort((a: JournalEntry, b: JournalEntry) =>
         new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
       );
-      setJournalEntries([sortedEntries[0]]); // Only set the most recent journal entry
+
+      // Logic to find the most recently created entry (if timestamps of edited entries are causing issues)
+      const mostRecentEntry = sortedEntries.find(entry => {
+        const entryDate = new Date(entry.timestamp);
+        return entryDate <= new Date(); // Ignore entries with future timestamps
+      });
+
+      // Update state with the found entry
+      console.log('Most Recent Journal Entry:', mostRecentEntry);
+      setJournalEntries(mostRecentEntry ? [mostRecentEntry] : []);
     }
   } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
