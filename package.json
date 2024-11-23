@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "start": "npm run client:build & npm run client:dev & npm run server",
-    "render-start": "npm run client:build & npm run client:dev & npm run render-server",
+    "render-start": "npm run client:build & npm run render-server",
     "start:dev": "concurrently \"npm run server:dev\" \"wait-on tcp:3001 && npm run client:dev\"",
     "server": "cd server && py app.py",
     "server:prod": "cd server && gunicorn -w 4 -b 0.0.0.0:3001 app:app",
@@ -17,9 +17,9 @@
     "build": "cd server && npm run build",
     "cypress": "npx cypress open",
     "test": "npx cypress run --browser electron --headless",
-    "github-install": "cd server && python3 -m pip install -r requirements.txt && cd ../client && npm install",
-    "render-build": "cd server && pip install -r requirements.txt && cd ../client && npm render-install",
-    "render-server": "cd server && py app.py --prod"
+    "github-install": "cd server && python -m pip install -r requirements.txt && cd ../client && npm install",
+    "render-build": "cd server && pip install -r requirements.txt && cd ../client && npm i",
+    "render-server": "cd server && python3 app.py --prod"
   },
   "dependencies": {
     "axios": "^1.7.7",
