@@ -68,7 +68,7 @@ const fetchQuote = async () => {
 const fetchSavedMeals = async () => {
   try {
     const response = await axios.get('/api/meal/saved');
-    console.log('Fetched Saved Meals:', response.data); // Debug log
+    console.log('Fetched Saved Meals:', response.data);
     setSavedMeals(response.data);
   } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
@@ -82,21 +82,18 @@ const fetchSavedMeals = async () => {
 const fetchJournalEntries = async () => {
   try {
     const response = await axios.get('/api/journal');
-    console.log('Fetched Journal Entries:', response.data); // Debug log
+    console.log('Fetched Journal Entries:', response.data);
 
     if (response.data.length > 0) {
-      // Sort entries based on timestamp
       const sortedEntries = response.data.sort((a: JournalEntry, b: JournalEntry) =>
         new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
       );
 
-      // Logic to find the most recently created entry (if timestamps of edited entries are causing issues)
-      const mostRecentEntry = sortedEntries.find(entry => {
+      const mostRecentEntry = sortedEntries.find((entry: { timestamp: string | number | Date; }) => {
         const entryDate = new Date(entry.timestamp);
-        return entryDate <= new Date(); // Ignore entries with future timestamps
+        return entryDate <= new Date();
       });
 
-      // Update state with the found entry
       console.log('Most Recent Journal Entry:', mostRecentEntry);
       setJournalEntries(mostRecentEntry ? [mostRecentEntry] : []);
     }
