@@ -10,8 +10,7 @@ Flask-HTTPAuth
 Flask-Admin
 Flask-Login
 Flask-Mail
-Flask-jwt-extended
-Flask-migrate
+Flask-JWT-Extended==4.7.1
 python-dotenv
 pymongoarrow
 pandas
