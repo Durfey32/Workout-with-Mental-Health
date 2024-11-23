@@ -10,7 +10,7 @@ Flask-HTTPAuth
 Flask-Admin
 Flask-Login
 Flask-Mail
-Flask-jwt-extended --upgrade
+Flask-jwt-extended
 Flask-migrate
 python-dotenv
 pymongoarrow
