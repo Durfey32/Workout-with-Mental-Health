@@ -13,7 +13,7 @@ import ContactUs from './pages/ContactUs.tsx';
 import Journal from './pages/Journal.tsx';
 import Workout from './pages/WorkOutGen.tsx';
 import Login from './pages/Login.tsx';
-import Nutrition from './pages/Nutrition';
+import Nutrition from './pages/Nutrition.tsx';
 
 
 

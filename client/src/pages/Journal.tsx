@@ -16,11 +16,10 @@ const Journal: React.FC = () => {
   const [error, setError] = useState<string | null>(null); // Error message for user feedback
   const [, setToken] = useState<string | null>(null);
 
-  // Fetch all journal entries from the backend
+ 
   useEffect(() => {
 
     const storedToken = localStorage.getItem('token');
-    // console.log('Token from local storage:', storedToken);
     setToken(storedToken);
     const fetchEntries = async () => {
       try {
@@ -40,11 +39,10 @@ const Journal: React.FC = () => {
     fetchEntries();
   }, []);
 
-  // Create a new journal entry
+  
   const createEntry = async (entryContent: string) => {
     const token = localStorage.getItem('token');
 
-    // console.log('Token from local storage:', token);
     if (!token) {
       setError('The Token is not getting pulled.');
       return;
@@ -58,7 +56,7 @@ const Journal: React.FC = () => {
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          title: 'Journal Entry', // Default title
+          title: 'Journal Entry', 
           content: entryContent,
           timestamp: new Date().toISOString(),
         }),
@@ -84,10 +82,10 @@ const Journal: React.FC = () => {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          title: 'Updated Journal Entry', // Example updated title
+          title: 'Updated Journal Entry', 
           content: updatedContent,
           timestamp: new Date().toISOString(),
-          user_id: 'exampleUserId', // Replace with actual user ID if applicable
+          user_id: 'exampleUserId', 
         }),
       });
 
@@ -107,7 +105,6 @@ const Journal: React.FC = () => {
     }
   };
 
-  // Delete a journal entry
   const deleteEntry = async (id: string) => {
     try {
       const response = await fetch(`/api/journal/${id}`, {
@@ -125,12 +122,11 @@ const Journal: React.FC = () => {
     }
   };
 
-  // Handle form submission for new entry
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (entry.trim()) {
       await createEntry(entry);
-      setEntry(''); // Clear the textarea after submission
+      setEntry(''); 
     }
   };
 
@@ -153,7 +149,7 @@ const Journal: React.FC = () => {
 
       <section>
         <h3>Your Journal Entries</h3>
-        {error && <p className="error-message">{error}</p>} {/* Display errors */}
+        {error && <p className="error-message">{error}</p>}
         {entries.length > 0 ? (
           <ul>
             {entries.map((entry) => (

@@ -7,6 +7,7 @@ const [quote, setQuote] = useState<string | null>(null);
 const [quoteAuthor, setQuoteAuthor] = useState<string | null>(null);
 const [savedWorkouts, setSavedWorkouts] = useState<Workout[]>([]);
 const [savedMeals, setSavedMeals] = useState<Meal[]>([]);
+const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]);
 
 interface Workout {
   type: ReactNode;
@@ -25,6 +26,13 @@ interface Meal {
   fat: string;
   carbs: string;
   image: string;
+}
+
+interface JournalEntry {
+  _id: string;
+  title: string;
+  content: string;
+  timestamp: string;
 }
 
 const fetchQuote = async () => {
@@ -71,11 +79,32 @@ const fetchSavedMeals = async () => {
   }
 };
 
+const fetchJournalEntries = async () => {
+  try {
+    const response = await axios.get('/api/journal');
+    console.log('Fetched Journal Entries:', response.data); // Debug log
+
+    if (response.data.length > 0) {
+      const sortedEntries = response.data.sort((a: JournalEntry, b: JournalEntry) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+      );
+      setJournalEntries([sortedEntries[0]]); // Only set the most recent journal entry
+    }
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      console.error(err.response?.data?.message || 'Failed to fetch journal entries');
+    } else {
+      console.error('Failed to fetch journal entries');
+    }
+  }
+};
+
 useEffect(() => {
 const fetchData = async () => {
   await fetchQuote();
   await fetchSavedWorkout();
   await fetchSavedMeals();
+  await fetchJournalEntries();
 };
 fetchData();
   
@@ -123,6 +152,18 @@ fetchData();
     ))
   ) : (
     <p>No meals saved yet.</p>
+  )}
+</div>
+<div className="journal-entries">
+  <h3>Most Recent Journal Entry</h3>
+  {journalEntries.length > 0 ? (
+    <div className="journal-entry">
+      <h4>{journalEntries[0].title}</h4>
+      <p>{journalEntries[0].content}</p>
+      <small>{new Date(journalEntries[0].timestamp).toLocaleString()}</small>
+    </div>
+  ) : (
+    <p>No journal entries yet.</p>
   )}
 </div>
       
