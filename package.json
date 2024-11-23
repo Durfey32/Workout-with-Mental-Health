@@ -19,7 +19,7 @@
     "test": "npx cypress run --browser electron --headless",
     "github-install": "cd server && python3 -m pip install -r requirements.txt && cd ../client && npm install",
     "render-build": "cd server && pip install -r requirements.txt && cd ../client && npm i",
-    "render-server": "cd server && py app.py --prod"
+    "render-server": "cd server && python3 app.py --prod"
   },
   "dependencies": {
     "axios": "^1.7.7",
