@@ -17,20 +17,33 @@ for journal in journal_collection.find():
 # Get all journal entries
 @journal_bp.route('/api/journal', methods=['GET'])
 def get_journals():
-    journal_collection = mongo.db.journals
-    journals = journal_collection.find()
+    try:
+        journal_collection = mongo.db.journals
+        journals = journal_collection.find()
 
-    serialized_journals = []
-    for journal in journals:
-        journal['_id'] = str(journal['_id'])
-        if 'timestamp' in journal and isinstance(journal['timestamp'], str):
-            try:
-                journal['timestamp'] = datetime.fromisoformat(journal['timestamp'])
-            except ValueError:
-                journal['timestamp'] = None
-        serialized_journals.append(journal)
+        serialized_journals = []
+        for journal in journals:
+            # Convert ObjectId to string
+            journal['_id'] = str(journal['_id'])
+            
+            # Ensure timestamp is properly formatted
+            if 'timestamp' in journal:
+                if isinstance(journal['timestamp'], datetime):
+                    journal['timestamp'] = journal['timestamp'].isoformat()
+                elif isinstance(journal['timestamp'], str):
+                    try:
+                        # Validate ISO format timestamps
+                        datetime.fromisoformat(journal['timestamp'])
+                    except ValueError:
+                        journal['timestamp'] = None
+            
+            serialized_journals.append(journal)
 
-    return jsonify(journals_schema.dump(journals)), 200
+        return jsonify(serialized_journals), 200
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'message': 'An error occurred while retrieving journals.', 'error': str(e)}), 500
+
 
 # Get a single journal entry by ID
 @journal_bp.route('/api/journal/<id>', methods=['GET'])
