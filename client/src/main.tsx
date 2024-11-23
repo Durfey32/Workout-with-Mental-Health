@@ -40,23 +40,23 @@ const router = createBrowserRouter([
           element: <Home />
         },
         {
-          path: 'workout-gen',
+          path: '/workout-gen',
           element: <Workout />
         },
         {
-          path: 'nutrition',
+          path: '/nutrition',
           element: <Nutrition />
         },
         {
-          path: 'journal',
+          path: '/journal',
           element: <Journal />
         },
         {
-          path: 'contact-us',
+          path: '/contact-us',
           element: <ContactUs />
         },
         {
-          path: 'settings',
+          path: '/settings',
           element: <SettingsInfo />
         },
       ],

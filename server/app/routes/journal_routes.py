@@ -84,19 +84,40 @@ def add_journal():
 # Update an existing journal entry
 @journal_bp.route('/api/journal/<id>', methods=['PUT'])
 def update_journal(id):
-    journal_collection = mongo.db.journals
-    journal = journal_collection.find_one({'_id': ObjectId(id)})
+    try:   
+        journal_collection = mongo.db.journals
 
-    if not journal:
-        return jsonify({'message': 'Journal entry not found'}), 404
+        # Find the journal entry by ID
+        journal = journal_collection.find_one({'_id': ObjectId(id)})
+        if not journal:
+            return jsonify({'message': 'Journal entry not found'}), 404
 
-    journal['title'] = request.json['title']
-    journal['content'] = request.json['content']
-    journal['timestamp'] = request.json['timestamp']
+        # Update fields using .get for safe extraction
+        journal['title'] = request.json.get('title', journal.get('title'))
+        journal['content'] = request.json.get('content', journal.get('content'))
 
-    journal_collection.update_one({'_id': ObjectId(id)}, {'$set': journal})
+        # Handle the timestamp update
+        incoming_timestamp = request.json.get('timestamp', journal.get('timestamp'))
+        if isinstance(incoming_timestamp, str):  # Check if it's a string
+            try:
+                journal['timestamp'] = datetime.fromisoformat(incoming_timestamp)
+            except ValueError:
+                return jsonify({'message': 'Invalid timestamp format. Expected ISO 8601 format.'}), 400
+        else:
+            journal['timestamp'] = incoming_timestamp  # Assume datetime object if not string
 
-    return jsonify(journal_schema.dump(journal)), 200
+        # Update the document in MongoDB
+        journal_collection.update_one({'_id': ObjectId(id)}, {'$set': journal})
+
+        # Prepare the journal for serialization
+        journal['_id'] = str(journal['_id'])  # Convert ObjectId to string
+        journal['timestamp'] = journal['timestamp'].isoformat()  # Serialize datetime to ISO 8601 format
+
+        return jsonify(journal), 200
+
+    except Exception as e:
+        print(f'Error: {e}')  # Log the error for debugging
+        return jsonify({'message': 'An error occurred while updating the journal entry.', 'error': str(e)}), 500
 
 # Delete a journal entry
 @journal_bp.route('/api/journal/<id>', methods=['DELETE'])

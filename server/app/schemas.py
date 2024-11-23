@@ -15,5 +15,5 @@ class JournalSchema(Schema):
     id = fields.Str(attribute='_id')
     title = fields.Str(required=True)
     content = fields.Str(required=True)
-    timestamp = fields.Str()
+    timestamp = fields.DateTime(format='iso')
     user_id = fields.Str(required=True)
