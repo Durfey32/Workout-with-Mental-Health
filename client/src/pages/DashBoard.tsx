@@ -126,8 +126,20 @@ fetchData();
         <p>{quote}</p>
         <p>-{quoteAuthor}</p>
       </div>
-      <h2>Welcome to Your Fitness & Mental Health Dashboard</h2>
-      <p>Track your progress, access workouts, and Journal!</p>
+        <h2>Welcome to Your Fitness & Mental Health Dashboard</h2>
+        <p>Track your progress, access workouts, and Journal!</p>
+      <div className="journal-entries">
+        <h3>Most Recent Journal Entry</h3>
+          {journalEntries.length > 0 ? (
+      <div className="journal-entry">
+        <h4>{journalEntries[0].title}</h4>
+        <p>{journalEntries[0].content}</p>
+        <small>{new Date(journalEntries[0].timestamp).toLocaleString()}</small>
+      </div>
+  ) : (
+    <p>No journal entries yet.</p>
+  )}
+</div>
       <div className="saved-workouts">
         <h3>Saved Workouts</h3>
         {savedWorkouts.length > 0 ? (
@@ -161,19 +173,6 @@ fetchData();
     <p>No meals saved yet.</p>
   )}
 </div>
-<div className="journal-entries">
-  <h3>Most Recent Journal Entry</h3>
-  {journalEntries.length > 0 ? (
-    <div className="journal-entry">
-      <h4>{journalEntries[0].title}</h4>
-      <p>{journalEntries[0].content}</p>
-      <small>{new Date(journalEntries[0].timestamp).toLocaleString()}</small>
-    </div>
-  ) : (
-    <p>No journal entries yet.</p>
-  )}
-</div>
-      
       </div>
   );
 };

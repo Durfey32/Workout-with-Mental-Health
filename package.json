@@ -6,6 +6,7 @@
     "dev": "vite",
     "start": "npm run client:build & npm run client:dev & npm run server",
     "start:dev": "concurrently \"npm run server:dev\" \"wait-on tcp:3001 && npm run client:dev\"",
+    "start:prod": "concurrently \"npm run server:prod\" \"wait-on tcp:3001 && npm run client:build\"",
     "server": "cd server && py app.py",
     "server:prod": "cd server && waitress-serve --port=3001 --call \"app:create_app\"",
     "server:dev": "cd server && py app.py --dev",
