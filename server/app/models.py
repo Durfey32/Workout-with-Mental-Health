@@ -24,7 +24,7 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
 class Workout:
-    def __init__(self, name, type, muscle, equipment, difficulty, instructions, user_id):
+    def __init__(self, name, type, muscle, equipment, difficulty, instructions, user_id=None):
         self.name = name
         self.type = type
         self.muscle = muscle
@@ -46,15 +46,16 @@ workout_schema = WorkoutSchema()
 workouts_schema = WorkoutSchema(many=True)
 
 class Meal:
-    def __init__(self, name, type, calories, protein, carbs, fat, user_id, image=""):
+    def __init__(self, name, type='Custom', calories=0, protein=0, carbs=0, fat=0, image='', user_id=None):
         self.name = name
         self.type = type
         self.calories = calories
         self.protein = protein
         self.carbs = carbs
         self.fat = fat
-        self.user_id = user_id
         self.image = image
+        self.user_id = user_id
+
 
 class MealSchema(Schema):
     name = fields.Str()

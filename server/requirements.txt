@@ -1,7 +1,7 @@
 Path
 Flask
 Flask-RESTful
-Flask-JWT
+# Flask-JWT
 Flask-SQLAlchemy
 Flask-Script
 Flask-Testing
