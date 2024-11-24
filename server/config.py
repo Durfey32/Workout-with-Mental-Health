@@ -1,33 +1,31 @@
 import os
-from flask import Flask
-from flask_cors import CORS
-
-app = Flask(__name__)
-CORS(app)
 
 class Config:
-    SECRET_KEY = os.getenv('SECRET_KEY', 'my_precious')
+    """Base configuration."""
+    SECRET_KEY = os.getenv("SECRET_KEY", "my_precious")
     DEBUG = False
     TESTING = False
-
-    MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017/default_db')
+    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/default_db")
 
 class DevelopmentConfig(Config):
+    """Development configuration."""
     DEBUG = True
-    MONGO_URI = os.getenv('DEV_MONGO_URI', 'mongodb://localhost:27017/dev_db')
+    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/dev_db")
 
 class TestingConfig(Config):
+    """Testing configuration."""
     DEBUG = True
     TESTING = True
-    MONGO_URI = os.getenv('TEST_MONGO_URI', 'mongodb://localhost:27017/test_db')
+    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/test_db")
 
 class ProductionConfig(Config):
+    """Production configuration."""
     DEBUG = False
-    MONGO_URI = os.getenv('PROD_MONGO_URI', 'mongodb://localhost:27017/prod_db')
+    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/prod_db")
 
 config = {
     "development": DevelopmentConfig,
     "testing": TestingConfig,
     "production": ProductionConfig,
-    "default": DevelopmentConfig
+    "default": DevelopmentConfig,
 }
