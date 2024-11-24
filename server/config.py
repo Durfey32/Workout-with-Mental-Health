@@ -21,6 +21,7 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     """Production configuration."""
     DEBUG = False
+    
     MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/prod_db")
 
 config = {

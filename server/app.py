@@ -2,7 +2,7 @@ from app import create_app
 import os
 import logging
 
-# Loggs the environment and MongoDB URI
+# Create logger
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
