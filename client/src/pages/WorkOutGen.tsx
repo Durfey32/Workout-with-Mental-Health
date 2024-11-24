@@ -108,10 +108,23 @@ const WorkoutGen: React.FC = () => {
             <div className="col-md-4">
               <label htmlFor="muscle" className="form-label">Muscle Group:</label>
               <select id="muscle" className="form-select" value={muscle} onChange={(e) => setMuscle(e.target.value)}>
-                <option value="biceps">Biceps</option>
-                <option value="triceps">Triceps</option>
-                <option value="chest">Chest</option>
-                <option value="legs">Legs</option>
+          <option value="biceps">Biceps</option>
+          <option value="triceps">Triceps</option>
+          <option value="chest">Chest</option>
+          <option value="forearms">Forearms</option>
+          <option value="lower_back">Lower Back</option>
+          <option value="middle_back">Middle Back</option>
+          <option value="abdominals">Abdominals</option>
+          <option value="abductors">Abductors</option>
+          <option value="adductors">Adductors</option>
+          <option value="quadriceps">Quadriceps</option>
+          <option value="hamstrings">Hamstrings</option>
+          <option value="glutes">Glutes</option>
+          <option value="calves">Calves</option>
+          <option value="lats">Lats</option>
+          <option value="neck">Neck</option>
+          <option value="traps">Traps</option>
+          <option value="any">Any</option>
                 {/* Add more options */}
               </select>
             </div>
@@ -119,9 +132,14 @@ const WorkoutGen: React.FC = () => {
             <div className="col-md-4">
               <label htmlFor="type" className="form-label">Exercise Type:</label>
               <select id="type" className="form-select" value={type || ''} onChange={(e) => setType(e.target.value || null)}>
-                <option value="">Any</option>
-                <option value="strength">Strength</option>
-                <option value="cardio">Cardio</option>
+          <option value="">Any</option>
+          <option value="cardio">Cardio</option>
+          <option value="strength">Strength</option>
+          <option value="stretching">Stretching</option>
+          <option value="strongman">strongman</option>
+          <option value="plyometric">Plyometric</option>
+          <option value="powerlifting">Power Lifting</option>
+          <option value="olympic_weightlifting">Olympic</option>
               </select>
             </div>
 

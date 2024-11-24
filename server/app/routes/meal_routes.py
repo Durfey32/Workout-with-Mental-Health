@@ -71,7 +71,8 @@ def add_meal():
         protein_raw = request.json.get('protein', '0')
         carbs_raw = request.json.get('carbs', '0')
         fat_raw = request.json.get('fat', '0')
-        image = request.json.get('image', '')  # Default to empty string if not provided
+        image = request.json.get('image', '')
+        user_id = request.json.get('user_id', 'default_user')
 
         # Ensure the values are strings before calling .replace()
         calories = int(str(calories_raw).replace('g', '').strip())
@@ -84,7 +85,7 @@ def add_meal():
             return jsonify({"message": "Name is required"}), 400
 
         # Create and save meal
-        new_meal = Meal(name=name, type=type, calories=calories, protein=protein, carbs=carbs, fat=fat, image=image)
+        new_meal = Meal(name=name, type=type, calories=calories, protein=protein, carbs=carbs, fat=fat, image=image, user_id=user_id)
         meal_collection = mongo.db.meals
         meal_collection.insert_one(new_meal.__dict__)
 

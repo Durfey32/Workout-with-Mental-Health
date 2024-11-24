@@ -1,7 +1,7 @@
 Path
 Flask
 Flask-RESTful
-Flask-JWT
+# Flask-JWT
 Flask-SQLAlchemy
 Flask-Script
 Flask-Testing
@@ -24,3 +24,4 @@ waitress
 flask_marshmallow
 marshmallow-sqlalchemy
 requests
+"pymongo[srv]"==3.12
