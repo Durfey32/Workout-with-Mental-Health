@@ -16,37 +16,34 @@ ma = Marshmallow()
 jwt = JWTManager()
 mongo = PyMongo()
 
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
 def create_app():
     app = Flask(__name__, static_folder='../../client/dist', static_url_path='/')
 
     env = os.getenv("FLASK_ENV", "default")
     app.config.from_object(config.get(env, config["default"]))
-    logger.info(f"Loaded configuration for {env} environment.")
+    print(f"Loaded configuration for {env} environment.")
 
     CORS(app)
 
-    # Ensure MONGODB_URI is set
-    app.config['MONGODB_URI'] = os.getenv('MONGODB_URI')
-    if not app.config['MONGODB_URI']:
-        logger.error("MONGODB_URI environment variable is not set")
-        raise ValueError("MONGODB_URI environment variable is not set")
+    # Ensure MONGO_URI is set
+    app.config['MONGO_URI'] = os.getenv('MONGO_URI')
+    if not app.config['MONGO_URI']:
+        raise ValueError("MONGO_URI environment variable is not set")
 
     mongo.init_app(app)
     ma.init_app(app)
     jwt.init_app(app)
 
     # MongoDB connection check
-    uri = app.config['MONGODB_URI']
+    uri = app.config['MONGO_URI']
     client = MongoClient(uri, server_api=ServerApi('1'))
     try:
         client.admin.command('ping')
-        logger.info("Pinged your deployment. Successfully connected to MongoDB!")
+        print("Pinged your deployment. Successfully connected to MongoDB!")
+        print(os.getenv('MONGO_URI'))
     except Exception as e:
-        logger.error(f"Error connecting to MongoDB: {e}")
-        raise e
+        print(f"Error connecting to MongoDB: {e}")
+        raise RuntimeError("MongoDB connection failed. Check your URI and network settings.") from e
 
     with app.app_context():
         from .routes.user_routes import user_bp
