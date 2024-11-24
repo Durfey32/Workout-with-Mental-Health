@@ -24,4 +24,3 @@ waitress
 flask_marshmallow
 marshmallow-sqlalchemy
 requests
-"pymongo[srv]"==3.12
