@@ -1,10 +1,11 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
+import { useNavigate } from 'react-router-dom'
 
 const ContactUs: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="contact-us container my-5">
-      <Navbar />
       <h1 className="text-center text-primary mb-4">Contact Us</h1>
       <p className="text-center text-secondary">
         For any questions or concerns, please contact us at:
@@ -54,6 +55,12 @@ const ContactUs: React.FC = () => {
               </a>
             </li>
           </ul>
+          <button
+            className="btn btn-outline-primary mt-4"
+            onClick={() => navigate(-1)}
+          >
+            Go Back
+          </button>
         </div>
       </div>
     </div>
