@@ -17,4 +17,8 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 3001))
     debug = env == "development"
     logger.info(f"Running on port {port}, debug={debug}")
+    print("API:" ,os.getenv('X-API-KEY'))
+    print("envobject: ", os.environ)
     app.run(host="0.0.0.0", port=port, debug=debug)
+
+    
