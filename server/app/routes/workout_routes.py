@@ -7,8 +7,6 @@ from bson import ObjectId
 from bson.errors import InvalidId
 
 workout_bp = Blueprint('workout_bp', __name__)
-print(f"API Key: {os.getenv('X-API-KEY')}")
-
 @workout_bp.route('/api/workout', methods=['GET'])
 def get_workouts():
     print(os.getenv('X-API-KEY'))
