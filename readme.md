@@ -51,6 +51,7 @@ Example tests are provided in the `tests/` directory to ensure the functionality
 
 Live Demo: [Workout with Mental Health](https://workout-with-mental-health.onrender.com)
 
+![alt text](chrome_RNGUTfH6jY.gif)
 ## Questions?
 For any questions, feel free to reach out:
 
