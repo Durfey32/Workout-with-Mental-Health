@@ -11,6 +11,7 @@ print(f"API Key: {os.getenv('X-API-KEY')}")
 
 @workout_bp.route('/api/workout', methods=['GET'])
 def get_workouts():
+    print(os.getenv('X-API-KEY'))
     muscle = request.args.get('muscle', 'biceps')
     exercise_type = request.args.get('type')
     difficulty = request.args.get('difficulty')
