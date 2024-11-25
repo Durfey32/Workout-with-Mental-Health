@@ -7,6 +7,7 @@ from bson import ObjectId
 from bson.errors import InvalidId
 
 workout_bp = Blueprint('workout_bp', __name__)
+print(f"API Key: {os.getenv('X-API-KEY')}")
 
 @workout_bp.route('/api/workout', methods=['GET'])
 def get_workouts():
@@ -20,8 +21,8 @@ def get_workouts():
     if difficulty:
         api_url += f"&difficulty={difficulty}"
 
-    api_key = os.getenv('X-Api-Key')
-    response = requests.get(api_url, headers={'X-Api-Key': api_key})
+    api_key = os.getenv('X-API-KEY')
+    response = requests.get(api_url, headers={'X-API-KEY': api_key})
     
     if response.status_code == requests.codes.ok:
         return jsonify(response.json())
