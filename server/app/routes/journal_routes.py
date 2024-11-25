@@ -11,8 +11,8 @@ journal_bp = Blueprint('journal', __name__)
 
 # Get all journal entries
 journal_collection = mongo.db.journals
-for journal in journal_collection.find():
-    print(journal)
+# for journal in journal_collection.find():
+    # print(journal)
 
 # Get all journal entries
 @journal_bp.route('/api/journal', methods=['GET'])
