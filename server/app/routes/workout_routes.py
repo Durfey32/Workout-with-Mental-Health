@@ -20,7 +20,7 @@ def get_workouts():
     if difficulty:
         api_url += f"&difficulty={difficulty}"
 
-    api_key = os.getenv('X-API-KEY')
+    api_key = os.getenv('X-Api-Key')
     response = requests.get(api_url, headers={'X-Api-Key': api_key})
     
     if response.status_code == requests.codes.ok:
