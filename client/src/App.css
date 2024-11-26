@@ -36,6 +36,13 @@
   transform: scale(1.1); /* Slight zoom effect */
 }
 
+.workout {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
 .footer {
   background-color: #282c34;
   padding: 20px;
