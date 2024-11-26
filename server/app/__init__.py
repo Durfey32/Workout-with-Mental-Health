@@ -8,7 +8,6 @@ from flask_jwt_extended import JWTManager
 from config import config
 from dotenv import load_dotenv
 import os
-import logging
 
 load_dotenv()
 

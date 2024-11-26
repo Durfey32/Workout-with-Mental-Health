@@ -145,6 +145,9 @@ const Home: React.FC = () => {
                 <div key={workout._id || workout.name} className="mb-2">
                   <h6>{workout.name}</h6>
                   <p>{workout.muscle}</p>
+                  <p>{workout.equipment}</p>
+                  <p>{workout.instructions}</p>
+                  <p>______________________</p>
                 </div>
               ))
             ) : (
@@ -162,6 +165,11 @@ const Home: React.FC = () => {
                 <div key={index} className="mb-2">
                   <h6>{meal.name}</h6>
                   <p>Calories: {meal.calories}</p>
+                  <p>Protein: {meal.protein}</p>
+                  <p>Fat: {meal.fat}</p>
+                  <p>Carbs: {meal.carbs}</p>
+                  <img src={meal.image} alt={meal.name} className="img-fluid" />
+                  <p>______________________</p>
                 </div>
               ))
             ) : (
